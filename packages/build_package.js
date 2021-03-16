@@ -33,7 +33,7 @@ const PLAYWRIGHT_CORE_FILES = ['bin/PrintDeps.exe', 'lib', 'types', 'NOTICE', 'L
 const PACKAGES = {
   'playwright': {
     description: 'A high-level API to automate web browsers',
-    browsers: ['chromium', 'firefox', 'webkit', 'ffmpeg'],
+    browsers: ['chromium', 'firefox', 'webkit', 'deprecated-webkit-mac-10.14', 'ffmpeg'],
     // We copy README.md additionally for Playwright so that it looks nice on NPM.
     files: [...PLAYWRIGHT_CORE_FILES, 'README.md'],
   },
@@ -44,7 +44,7 @@ const PACKAGES = {
   },
   'playwright-webkit': {
     description: 'A high-level API to automate WebKit',
-    browsers: ['webkit'],
+    browsers: ['webkit', 'deprecated-webkit-mac-10.14'],
     files: PLAYWRIGHT_CORE_FILES,
   },
   'playwright-firefox': {

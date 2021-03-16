@@ -17,6 +17,11 @@
       "download": true
     },
     {
+      "name": "deprecated-webkit-mac-10.14",
+      "revision": "1443",
+      "download": true
+    },
+    {
       "name": "ffmpeg",
       "revision": "1005",
       "download": true

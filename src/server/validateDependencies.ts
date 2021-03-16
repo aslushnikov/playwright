@@ -45,6 +45,7 @@ export async function validateHostRequirements(registry: registry.Registry, brow
 const DL_OPEN_LIBRARIES = {
   chromium: [],
   webkit: ['libGLESv2.so.2', 'libx264.so'],
+  'deprecated-webkit-mac-10.14': [],
   firefox: [],
   clank: [],
   ffmpeg: [],

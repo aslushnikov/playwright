@@ -23,8 +23,8 @@ import * as util from 'util';
 import { getUbuntuVersionSync } from './ubuntuVersion';
 import { assert, getFromENV } from './utils';
 
-export type BrowserName = 'chromium'|'webkit'|'firefox'|'ffmpeg';
-export const allBrowserNames: BrowserName[] = ['chromium', 'webkit', 'firefox', 'ffmpeg'];
+export type BrowserName = 'chromium'|'webkit'|'firefox'|'ffmpeg'|'deprecated-webkit-mac-10.14';
+export const allBrowserNames: BrowserName[] = ['chromium', 'webkit', 'firefox', 'ffmpeg', 'deprecated-webkit-mac-10.14'];
 
 type BrowserPlatform = 'win32'|'win64'|'mac10.13'|'mac10.14'|'mac10.15'|'mac11'|'mac11-arm64'|'ubuntu18.04'|'ubuntu20.04';
 type BrowserDescriptor = {
@@ -60,12 +60,23 @@ const EXECUTABLE_PATHS = {
     'ubuntu18.04': ['pw_run.sh'],
     'ubuntu20.04': ['pw_run.sh'],
     'mac10.13': undefined,
-    'mac10.14': ['pw_run.sh'],
+    'mac10.14': undefined,
     'mac10.15': ['pw_run.sh'],
     'mac11': ['pw_run.sh'],
     'mac11-arm64': ['pw_run.sh'],
     'win32': ['Playwright.exe'],
     'win64': ['Playwright.exe'],
+  },
+  'deprecated-webkit-mac-10.14': {
+    'ubuntu18.04': undefined,
+    'ubuntu20.04': undefined,
+    'mac10.13': undefined,
+    'mac10.14': ['pw_run.sh'],
+    'mac10.15': undefined,
+    'mac11': undefined,
+    'mac11-arm64': undefined,
+    'win32': undefined,
+    'win64': undefined,
   },
   ffmpeg: {
     'ubuntu18.04': ['ffmpeg-linux'],
@@ -80,6 +91,10 @@ const EXECUTABLE_PATHS = {
   },
 };
 
+const FAIL_DOWNLOAD = '<fail download marker>';
+// - missing URL means the download will be skipped.
+// - marking URL as `FAIL_DOWNLOAD` will result in exception during playwright installation
+//   on a given platform.
 const DOWNLOAD_URLS = {
   chromium: {
     'ubuntu18.04': '%s/builds/chromium/%s/chromium-linux.zip',
@@ -106,13 +121,24 @@ const DOWNLOAD_URLS = {
   webkit: {
     'ubuntu18.04': '%s/builds/webkit/%s/webkit-ubuntu-18.04.zip',
     'ubuntu20.04': '%s/builds/webkit/%s/webkit-ubuntu-20.04.zip',
-    'mac10.13': undefined,
-    'mac10.14': '%s/builds/webkit/%s/webkit-mac-10.14.zip',
+    'mac10.13': FAIL_DOWNLOAD,
+    'mac10.14': undefined,
     'mac10.15': '%s/builds/webkit/%s/webkit-mac-10.15.zip',
     'mac11': '%s/builds/webkit/%s/webkit-mac-10.15.zip',
     'mac11-arm64': '%s/builds/webkit/%s/webkit-mac-11.0-arm64.zip',
     'win32': '%s/builds/webkit/%s/webkit-win64.zip',
     'win64': '%s/builds/webkit/%s/webkit-win64.zip',
+  },
+  'deprecated-webkit-mac-10.14': {
+    'ubuntu18.04': undefined,
+    'ubuntu20.04': undefined,
+    'mac10.13': undefined,
+    'mac10.14': '%s/builds/deprecated-webkit-mac-10.14/%s/deprecated-webkit-mac-10.14.zip',
+    'mac10.15': undefined,
+    'mac11': undefined,
+    'mac11-arm64': undefined,
+    'win32': undefined,
+    'win64': undefined,
   },
   ffmpeg: {
     'ubuntu18.04': '%s/builds/ffmpeg/%s/ffmpeg-linux.zip',
@@ -267,7 +293,7 @@ export class Registry {
                          getFromENV('PLAYWRIGHT_DOWNLOAD_HOST') ||
                          'https://playwright.azureedge.net';
     const urlTemplate = DOWNLOAD_URLS[browserName][hostPlatform];
-    assert(urlTemplate, `ERROR: Playwright does not support ${browserName} on ${hostPlatform}`);
+    assert(urlTemplate && urlTemplate !== FAIL_DOWNLOAD, `ERROR: Playwright does not support ${browserName} on ${hostPlatform}`);
     return util.format(urlTemplate, downloadHost, browser.revision);
   }
 
@@ -275,6 +301,8 @@ export class Registry {
     // Older versions do not have "download" field. We assume they need all browsers
     // from the list. So we want to skip all browsers that are explicitly marked as "download: false".
     const browser = this._descriptors.find(browser => browser.name === browserName);
-    return !!browser && browser.download !== false;
+    // We should not download browsers that have undefined URL.
+    const urlTemplate = DOWNLOAD_URLS[browserName][hostPlatform];
+    return !!browser && browser.download !== false && !!urlTemplate;
   }
 }
