@@ -288,6 +288,7 @@ export class Registry {
       firefox: 'PLAYWRIGHT_FIREFOX_DOWNLOAD_HOST',
       webkit: 'PLAYWRIGHT_WEBKIT_DOWNLOAD_HOST',
       ffmpeg: 'PLAYWRIGHT_FFMPEG_DOWNLOAD_HOST',
+      'deprecated-webkit-mac-10.14': 'PLAYWRIGHT_WEBKIT_DOWNLOAD_HOST',
     };
     const downloadHost = getFromENV(envDownloadHost[browserName]) ||
                          getFromENV('PLAYWRIGHT_DOWNLOAD_HOST') ||
