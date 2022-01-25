@@ -31,6 +31,10 @@ const sourceMaps: Map<string, string> = new Map();
 const kStackTraceLimit = 15;
 Error.stackTraceLimit = kStackTraceLimit;
 
+function LOG(arg: string) {
+  fs.appendFileSync('/Users/andreylushnikov/prog/playwright/log.txt', arg + '\n');
+}
+
 sourceMapSupport.install({
   environment: 'node',
   handleUncaughtExceptions: false,
@@ -40,10 +44,18 @@ sourceMapSupport.install({
     const sourceMapPath = sourceMaps.get(source)!;
     if (!fs.existsSync(sourceMapPath))
       return null;
-    return {
-      map: JSON.parse(fs.readFileSync(sourceMapPath, 'utf-8')),
-      url: source
-    };
+    LOG('Start reading: ' + sourceMapPath);
+    const data = fs.readFileSync(sourceMapPath, 'utf-8');
+    LOG('End reading: ' + sourceMapPath);
+    try {
+      return {
+        map: JSON.parse(data),
+        url: source
+      };
+    } catch (e) {
+      LOG('ERROR while reading: ' + sourceMapPath);
+      throw e;
+    }
   }
 });
 
@@ -141,8 +153,11 @@ export function transformHook(code: string, filename: string, tsconfig: TsConfig
   } as babel.TransformOptions)!;
   if (result.code) {
     fs.mkdirSync(path.dirname(cachePath), { recursive: true });
-    if (result.map)
+    if (result.map) {
+      LOG('Start writing: ' + sourceMapPath);
       fs.writeFileSync(sourceMapPath, JSON.stringify(result.map), 'utf8');
+      LOG('End writing:' + sourceMapPath);
+    }
     // Compiled files with base URL depend on the FS state during compilation,
     // never cache them.
     if (!hasBaseUrl)
