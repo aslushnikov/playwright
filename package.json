@@ -98,5 +98,8 @@
     "webpack-cli": "^4.9.0",
     "xml2js": "^0.4.23",
     "yaml": "^1.10.0"
+  },
+  "dependencies": {
+    "bisect-chrome": "file:../bisect-chrome"
   }
 }

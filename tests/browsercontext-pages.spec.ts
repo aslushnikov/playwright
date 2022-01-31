@@ -79,7 +79,7 @@ it('should click the button with deviceScaleFactor set', async ({ browser, serve
   await context.close();
 });
 
-it('should click the button with offset with page scale', async ({ browser, server, headless, browserName, browserVersion }) => {
+it.only('should click the button with offset with page scale', async ({ browser, server, headless, browserName, browserVersion }) => {
   it.skip(browserName === 'firefox');
 
   const context = await browser.newContext({ viewport: { width: 400, height: 400 }, isMobile: true });
