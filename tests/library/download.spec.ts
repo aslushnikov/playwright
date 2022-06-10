@@ -69,6 +69,10 @@ it.describe('download event', () => {
       expect(responseOrError instanceof Error).toBeTruthy();
       expect(responseOrError.message).toContain('Download is starting');
       expect(page.url()).toBe('about:blank');
+    } else if (browserName === 'firefox') {
+      expect(responseOrError instanceof Error).toBeTruthy();
+      expect(responseOrError.message).toContain('NS_BINDING_RETARGETED');
+      expect(page.url()).toBe('about:blank');
     } else {
       expect(responseOrError.status()).toBe(200);
       expect(page.url()).toBe(server.PREFIX + '/download');
@@ -94,6 +98,10 @@ it.describe('download event', () => {
     } else if (browserName === 'webkit') {
       expect(responseOrError instanceof Error).toBeTruthy();
       expect(responseOrError.message).toContain('Download is starting');
+      expect(page.url()).toBe('about:blank');
+    } else if (browserName === 'firefox') {
+      expect(responseOrError instanceof Error).toBeTruthy();
+      expect(responseOrError.message).toContain('NS_BINDING_RETARGETED');
       expect(page.url()).toBe('about:blank');
     } else {
       expect(responseOrError.status()).toBe(200);
