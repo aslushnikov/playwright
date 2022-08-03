@@ -48,11 +48,11 @@ class Juggler {
         const jugglerPipeFlag = cmdLine.handleFlag('juggler-pipe', false);
         if (!jugglerPipeFlag)
           return;
-        Services.startup.enterLastWindowClosingSurvivalArea();
+
+        this._silent = cmdLine.findFlag('silent', false) >= 0;
+        if (this._silent)
+          Services.startup.enterLastWindowClosingSurvivalArea();
         Services.obs.addObserver(this, "final-ui-startup");
-        Services.obs.addObserver(this, "browser-idle-startup-tasks-finished");
-        Services.obs.addObserver(this, "mail-idle-startup-tasks-finished");
-        Services.obs.addObserver(this, "quit-application");
         break;
       // Used to wait until the initial application window has been opened.
       case "final-ui-startup":
@@ -75,6 +75,7 @@ class Juggler {
         Services.appShell.hiddenDOMWindow;
 
         let pipeStopped = false;
+        let browserHandler;
         const pipe = Cc['@mozilla.org/juggler/remotedebuggingpipe;1'].getService(Ci.nsIRemoteDebuggingPipe);
         const connection = {
           QueryInterface: ChromeUtils.generateQI([Ci.nsIRemoteDebuggingPipeClient]),
@@ -83,8 +84,8 @@ class Juggler {
               this.onmessage({ data: message });
           },
           disconnected() {
-            if (this._browserHandler)
-              this._browserHandler['Browser.close']();
+            if (browserHandler)
+              browserHandler['Browser.close']();
           },
           send(message) {
             if (pipeStopped) {
@@ -98,22 +99,16 @@ class Juggler {
         };
         pipe.init(connection);
         const dispatcher = new Dispatcher(connection);
-        this._browserHandler = new BrowserHandler(dispatcher.rootSession(), dispatcher, targetRegistry, () => {
-          Services.startup.exitLastWindowClosingSurvivalArea();
+        browserHandler = new BrowserHandler(dispatcher.rootSession(), dispatcher, targetRegistry, () => {
+          if (this._silent)
+            Services.startup.exitLastWindowClosingSurvivalArea();
           connection.onclose();
           pipe.stop();
           pipeStopped = true;
         });
-        dispatcher.rootSession().setHandler(this._browserHandler);
+        dispatcher.rootSession().setHandler(browserHandler);
         loadFrameScript();
         dump(`\nJuggler listening to the pipe\n`);
-        break;
-      case "browser-idle-startup-tasks-finished":
-      case "mail-idle-startup-tasks-finished":
-        Services.obs.removeObserver(this, "browser-idle-startup-tasks-finished");
-        Services.obs.removeObserver(this, "mail-idle-startup-tasks-finished");
-        break;
-      case "quit-application":
         break;
     }
   }
