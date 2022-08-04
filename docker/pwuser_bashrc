@@ -1,0 +1,22 @@
+source /etc/os-release
+echo "======================================================================"
+echo "Welcome to the ${ENV_NAME} environment!"
+echo "* distribution: ${PRETTY_NAME}"
+echo "* architecture: $(arch)"
+
+if [[ -n "${CXX}" ]]; then
+  echo "*  default CXX: ${CXX}"
+fi
+if [[ -n "${CC}" ]]; then
+  echo "*   default CC: ${CC}"
+fi
+
+echo
+echo "NOTE: Playwright clone is shallow (has no git history); to unshallow, run:"
+echo "    git fetch --unshallow"
+echo
+echo "To get started, prepare your browser checkout:"
+echo "    CI=1 ./browser_patches/prepare_checkout.sh ${BROWSER_NAME}"
+echo
+echo "======================================================================"
+

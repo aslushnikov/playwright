@@ -122,10 +122,6 @@ function ensure_docker_container {
   docker exec ${DOCKER_ARGS} "${DOCKER_CONTAINER_NAME}" /bin/bash -c '
     set -e
     arch
-    if [[ "${BUILD_FLAVOR}" == webkit-debian-11 ]]; then
-      # Add contrib & non-free to package list
-      echo "deb http://ftp.us.debian.org/debian bullseye main contrib non-free" >> /etc/apt/sources.list.d/pwbuild.list
-    fi
 
     apt-get update && apt-get install -y wget \
                                          git-core \
