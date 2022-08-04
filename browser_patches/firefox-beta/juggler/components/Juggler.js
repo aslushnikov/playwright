@@ -37,6 +37,8 @@ class Juggler {
     cmdLine.handleFlag("juggler-pipe", false);
   }
 
+  // This flow is taken from Remote agent and Marionette.
+  // See https://github.com/mozilla/gecko-dev/blob/0c1b4921830e6af8bc951da01d7772de2fe60a08/remote/components/RemoteAgent.jsm#L302
   async observe(subject, topic) {
     switch (topic) {
       case "profile-after-change":
