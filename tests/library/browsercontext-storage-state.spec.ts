@@ -104,9 +104,10 @@ it('should round-trip through the file', async ({ contextFactory }, testInfo) =>
   await context2.close();
 });
 
-it('should capture cookies', async ({ server, context, page, contextFactory }) => {
+it.only('should capture cookies', async ({ server, context, page, contextFactory }) => {
+  const token = '2|1:0|10:1664243392|12:access_token|48:YWRlNzJiZjItM2UwNi0xMWVkLTgyNDAtZWU0M2M2YTQ3ZDVj|c9acc64d160ccf2e3fca98f905783a3d959398fd884e48b0a3cd53095bee8702';
   server.setRoute('/setcookie.html', (req, res) => {
-    res.setHeader('Set-Cookie', ['a=b', 'empty=']);
+    res.setHeader('Set-Cookie', ['a=b', 'access_token=' + token, 'empty=']);
     res.end();
   });
 
@@ -116,6 +117,7 @@ it('should capture cookies', async ({ server, context, page, contextFactory }) =
     return cookies.map(cookie => cookie.trim()).sort();
   })).toEqual([
     'a=b',
+    'access_token=' + token,
     'empty=',
   ]);
 
@@ -128,6 +130,10 @@ it('should capture cookies', async ({ server, context, page, contextFactory }) =
     expect.objectContaining({
       name: 'empty',
       value: ''
+    }),
+    expect.objectContaining({
+      name: 'access_token',
+      value: token,
     })
   ]));
   const context2 = await contextFactory({ storageState });
@@ -138,6 +144,7 @@ it('should capture cookies', async ({ server, context, page, contextFactory }) =
     return cookies.map(cookie => cookie.trim()).sort();
   })).toEqual([
     'a=b',
+    'access_token=' + token,
     'empty=',
   ]);
 });
