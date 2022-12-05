@@ -115,7 +115,7 @@ Examples:
 }
 
 function addRebaselineCommand(program: Command) {
-  const command = program.command('rebaseline');
+  const command = program.command('rebase');
   command.description('update expect statements to make tests pass ');
   command.action((report, options) => {
     rebaselineCommand();
