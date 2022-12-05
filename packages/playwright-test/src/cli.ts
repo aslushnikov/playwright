@@ -26,7 +26,7 @@ import { stopProfiling, startProfiling } from './profiler';
 import type { TestFileFilter } from './util';
 import { createTitleMatcher } from './util';
 import { showHTMLReport } from './reporters/html';
-import { rebaseline } from './rebaseline';
+import { rebaselineCommand } from './rebaseline';
 import { baseFullConfig, defaultTimeout, fileIsModule } from './loader';
 import type { TraceMode } from './types';
 
@@ -118,7 +118,7 @@ function addRebaselineCommand(program: Command) {
   const command = program.command('rebaseline');
   command.description('update expect statements to make tests pass ');
   command.action((report, options) => {
-    rebaseline();
+    rebaselineCommand();
   });
 }
 

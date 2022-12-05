@@ -16,13 +16,43 @@
 
 import fs from 'fs';
 import { types, parse, traverse } from './babelBundle';
+import type { TestStep } from '../types/testReporter';
 
 const supportedMatchers = new Set([
   'toBe',
   'toMatchSnapshot',
 ]);
 
-export async function rebaseline() {
+export class RebaselineLog {
+  _failedSteps: {
+    step: TestStep,
+    rebaselineInfo: any
+  }[] = [];
+
+  onStepEnd(step: TestStep, rebaselineInfo: any) {
+    if (!step.error || !rebaselineInfo)
+      return;
+    this._failedSteps.push({ step, rebaselineInfo });
+  }
+
+  async save() {
+    const result = [];
+    const sourceCodesCache: Map<string, Promise<SourceCode>> = new Map();
+    for (const { step, rebaselineInfo } of this._failedSteps) {
+      if (!step.location)
+        continue;
+      const sourceCode = await SourceCode.read(step.location.file, sourceCodesCache);
+      result.push({
+        ...rebaselineInfo,
+        file: sourceCode.filepath,
+        offset: sourceCode.positionToOffset(step.location.line - 1, step.location.column - 1),
+      });
+    }
+    await fs.promises.writeFile('./rebaseline.json', JSON.stringify(result, null, 2));
+  }
+}
+
+export async function rebaselineCommand() {
   const sourceCodesCache = new Map();
   const rawRules = JSON.parse(await fs.promises.readFile('./rebaseline.json', 'utf8'));
   const rules = await Promise.all(rawRules.map(async (rawRule: any) => {

@@ -24,6 +24,7 @@ import type { Loader } from './loader';
 import { TestCase } from './test';
 import { ManualPromise } from 'playwright-core/lib/utils/manualPromise';
 import { TestTypeImpl } from './testType';
+import { RebaselineLog } from './rebaseline';
 
 export type TestGroup = {
   workerHash: string;
@@ -62,10 +63,12 @@ export class Dispatcher {
   private _reporter: Reporter;
   private _hasWorkerErrors = false;
   private _failureCount = 0;
+  private _rebaselineLog: RebaselineLog;
 
-  constructor(loader: Loader, testGroups: TestGroup[], reporter: Reporter) {
+  constructor(loader: Loader, testGroups: TestGroup[], reporter: Reporter, rebaselineLog: RebaselineLog) {
     this._loader = loader;
     this._reporter = reporter;
+    this._rebaselineLog = rebaselineLog;
     this._queue = testGroups;
     for (const group of testGroups) {
       this._queuedOrRunningHashCount.set(group.workerHash, 1 + (this._queuedOrRunningHashCount.get(group.workerHash) || 0));
@@ -286,8 +289,9 @@ export class Dispatcher {
         step.error = params.error;
       stepStack.delete(step);
       steps.delete(params.stepId);
-      (step as any)._rebaselineInfo = params.rebaselineInfo;
       this._reporter.onStepEnd?.(data.test, result, step);
+      this._rebaselineLog.onStepEnd(step, params.rebaselineInfo);
+      
     };
     worker.on('stepEnd', onStepEnd);
 

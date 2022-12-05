@@ -33,7 +33,6 @@ import { formatError } from './reporters/base';
 import DotReporter from './reporters/dot';
 import EmptyReporter from './reporters/empty';
 import GitHubReporter from './reporters/github';
-import RebaselineReporter from './reporters/rebaseline';
 import HtmlReporter from './reporters/html';
 import JSONReporter from './reporters/json';
 import JUnitReporter from './reporters/junit';
@@ -46,6 +45,8 @@ import { Suite } from './test';
 import type { Config, FullConfigInternal, FullProjectInternal, ReporterInternal } from './types';
 import { createFileMatcher, createFileMatcherFromFilters, createTitleMatcher, serializeError } from './util';
 import type { Matcher, TestFileFilter } from './util';
+import { RebaselineLog } from './rebaseline';
+import { timeStamp } from 'console';
 
 const removeFolderAsync = promisify(rimraf);
 const readDirAsync = promisify(fs.readdir);
@@ -83,9 +84,11 @@ export class Runner {
   private _loader: Loader;
   private _reporter!: ReporterInternal;
   private _plugins: TestRunnerPlugin[] = [];
+  private _rebaselineLog: RebaselineLog;
 
   constructor(configCLIOverrides?: ConfigCLIOverrides) {
     this._loader = new Loader(configCLIOverrides);
+    this._rebaselineLog = new RebaselineLog();
     setRunnerToAddPluginsTo(this);
   }
 
@@ -137,7 +140,6 @@ export class Runner {
       line: list ? ListModeReporter : LineReporter,
       list: list ? ListModeReporter : ListReporter,
       github: GitHubReporter,
-      rebaseline: RebaselineReporter,
       json: JSONReporter,
       junit: JUnitReporter,
       null: EmptyReporter,
@@ -185,6 +187,7 @@ export class Runner {
       fullResult = result.result;
     }
     await this._reporter.onEnd?.(fullResult);
+    await this._rebaselineLog.save();
 
     // Calling process.exit() might truncate large stdout/stderr output.
     // See https://github.com/nodejs/node/issues/6456.
@@ -520,7 +523,7 @@ export class Runner {
   }
 
   private async _dispatchToWorkers(stageGroups: TestGroup[]): Promise<'success'|'signal'|'workererror'> {
-    const dispatcher = new Dispatcher(this._loader, [...stageGroups], this._reporter);
+    const dispatcher = new Dispatcher(this._loader, [...stageGroups], this._reporter, this._rebaselineLog);
     const sigintWatcher = new SigIntWatcher();
     await Promise.race([dispatcher.run(), sigintWatcher.promise()]);
     if (!sigintWatcher.hadSignal()) {
@@ -1006,5 +1009,5 @@ function sanitizeConfigForJSON(object: any, visited: Set<any>): any {
   return result;
 }
 
-export const builtInReporters = ['list', 'line', 'dot', 'json', 'junit', 'null', 'github', 'html', 'rebaseline'] as const;
+export const builtInReporters = ['list', 'line', 'dot', 'json', 'junit', 'null', 'github', 'html'] as const;
 export type BuiltInReporter = typeof builtInReporters[number];
