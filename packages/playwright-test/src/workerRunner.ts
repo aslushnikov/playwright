@@ -242,6 +242,7 @@ export class WorkerRunner extends EventEmitter {
             refinedTitle: step.refinedTitle,
             stepId,
             wallTime: Date.now(),
+            rebaselineInfo: step.rebaselineInfo,
             error,
           };
           this.emit('stepEnd', payload);

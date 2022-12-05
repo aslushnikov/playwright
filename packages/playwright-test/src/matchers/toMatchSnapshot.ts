@@ -139,6 +139,8 @@ class SnapshotHelper<T extends ImageComparatorOptions> {
     this.mimeType = mime.getType(path.basename(this.snapshotPath)) ?? 'application/octet-string';
     this.comparator = getComparator(this.mimeType);
 
+    testInfo.currentStep!.rebaselineInfo.value = this.actualPath;
+
     this.testInfo = testInfo;
     this.allOptions = options;
     this.comparatorOptions = {

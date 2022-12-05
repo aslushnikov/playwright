@@ -35,6 +35,7 @@ export interface TestStepInternal {
   forceNoParent: boolean;
   location?: Location;
   refinedTitle?: string;
+  rebaselineInfo?: any;
 }
 
 /**

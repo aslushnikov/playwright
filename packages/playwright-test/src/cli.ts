@@ -26,6 +26,7 @@ import { stopProfiling, startProfiling } from './profiler';
 import type { TestFileFilter } from './util';
 import { createTitleMatcher } from './util';
 import { showHTMLReport } from './reporters/html';
+import { rebaseline } from './rebaseline';
 import { baseFullConfig, defaultTimeout, fileIsModule } from './loader';
 import type { TraceMode } from './types';
 
@@ -33,6 +34,7 @@ export function addTestCommands(program: Command) {
   addTestCommand(program);
   addShowReportCommand(program);
   addListFilesCommand(program);
+  addRebaselineCommand(program);
 }
 
 function addTestCommand(program: Command) {
@@ -110,6 +112,14 @@ Arguments [report]:
 Examples:
   $ npx playwright show-report
   $ npx playwright show-report playwright-report`);
+}
+
+function addRebaselineCommand(program: Command) {
+  const command = program.command('rebaseline');
+  command.description('update expect statements to make tests pass ');
+  command.action((report, options) => {
+    rebaseline();
+  });
 }
 
 async function runTests(args: string[], opts: { [key: string]: any }) {

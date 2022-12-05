@@ -286,6 +286,7 @@ export class Dispatcher {
         step.error = params.error;
       stepStack.delete(step);
       steps.delete(params.stepId);
+      (step as any)._rebaselineInfo = params.rebaselineInfo;
       this._reporter.onStepEnd?.(data.test, result, step);
     };
     worker.on('stepEnd', onStepEnd);

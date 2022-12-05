@@ -33,6 +33,7 @@ import { formatError } from './reporters/base';
 import DotReporter from './reporters/dot';
 import EmptyReporter from './reporters/empty';
 import GitHubReporter from './reporters/github';
+import RebaselineReporter from './reporters/rebaseline';
 import HtmlReporter from './reporters/html';
 import JSONReporter from './reporters/json';
 import JUnitReporter from './reporters/junit';
@@ -136,6 +137,7 @@ export class Runner {
       line: list ? ListModeReporter : LineReporter,
       list: list ? ListModeReporter : ListReporter,
       github: GitHubReporter,
+      rebaseline: RebaselineReporter,
       json: JSONReporter,
       junit: JUnitReporter,
       null: EmptyReporter,
@@ -1004,5 +1006,5 @@ function sanitizeConfigForJSON(object: any, visited: Set<any>): any {
   return result;
 }
 
-export const builtInReporters = ['list', 'line', 'dot', 'json', 'junit', 'null', 'github', 'html'] as const;
+export const builtInReporters = ['list', 'line', 'dot', 'json', 'junit', 'null', 'github', 'html', 'rebaseline'] as const;
 export type BuiltInReporter = typeof builtInReporters[number];

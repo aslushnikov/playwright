@@ -100,7 +100,7 @@ export const printReceivedStringContainExpectedResult = (
 type ExpectMessageOrOptions = undefined | string | { message?: string, timeout?: number, intervals?: number[] };
 
 function createExpect(actual: unknown, messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
-  return new Proxy(expectLibrary(actual), new ExpectMetaInfoProxyHandler(messageOrOptions, isSoft, isPoll, generator));
+  return new Proxy(expectLibrary(actual), new ExpectMetaInfoProxyHandler(actual, messageOrOptions, isSoft, isPoll, generator));
 }
 
 export const expect: Expect = new Proxy(expectLibrary as any, {
@@ -161,9 +161,11 @@ type ExpectMetaInfo = {
 
 class ExpectMetaInfoProxyHandler {
   private _info: ExpectMetaInfo;
+  private _actual: any;
 
-  constructor(messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
+  constructor(actual: any, messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
     this._info = { isSoft, isPoll, generator, isNot: false };
+    this._actual = actual;
     if (typeof messageOrOptions === 'string') {
       this._info.message = messageOrOptions;
     } else {
@@ -182,10 +184,14 @@ class ExpectMetaInfoProxyHandler {
         this._info.isNot = !this._info.isNot;
       return new Proxy(matcher, this);
     }
+    const rebaselineInfo = {
+      matcherName,
+      value: this._actual,
+    };
     if (this._info.isPoll) {
       if ((customMatchers as any)[matcherName] || matcherName === 'resolves' || matcherName === 'rejects')
         throw new Error(`\`expect.poll()\` does not support "${matcherName}" matcher.`);
-      matcher = (...args: any[]) => pollMatcher(matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
+      matcher = (...args: any[]) => pollMatcher(rebaselineInfo, matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
     }
     return (...args: any[]) => {
       const testInfo = currentTestInfo();
@@ -205,6 +211,7 @@ class ExpectMetaInfoProxyHandler {
         forceNoParent: false
       });
       testInfo.currentStep = step;
+      step.rebaselineInfo = rebaselineInfo;
 
       const reportStepError = (jestError: Error) => {
         const message = jestError.message;
@@ -250,7 +257,7 @@ class ExpectMetaInfoProxyHandler {
   }
 }
 
-async function pollMatcher(matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
+async function pollMatcher(rebaselineInfo: any, matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
   let matcherError;
   const startTime = monotonicTime();
   pollIntervals = pollIntervals || [100, 250, 500, 1000];
@@ -262,6 +269,7 @@ async function pollMatcher(matcherName: any, isNot: boolean, pollIntervals: numb
     const received = timeout !== 0 ? await raceAgainstTimeout(generator, timeout - elapsed) : await generator();
     if (received.timedOut)
       break;
+    rebaselineInfo.value = received.result;
     try {
       let expectInstance = expectLibrary(received.result) as any;
       if (isNot)
