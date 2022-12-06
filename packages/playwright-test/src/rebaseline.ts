@@ -45,12 +45,17 @@ async function saveRequests(requests: RebaselineRequest[]) {
   await fs.promises.writeFile('./rebaseline.json', JSON.stringify(requests.map(request => request.serialize()), null, 2));
 }
 
+async function readRequests(): Promise<RebaselineRequest[]> {
+  const rawRequests: RawRebaselineRequest[] = JSON.parse(await fs.promises.readFile('./rebaseline.json', 'utf8'));
+  return await RebaselineRequest.fromJSON(rawRequests);
+}
+
 export class RebaselineLog {
   _failedSteps: TestStep[] = [];
   _rebaselineInfos: any[] = [];
 
   onStepEnd(step: TestStep, rebaselineInfo: any) {
-    if (!step.error || !rebaselineInfo)
+    if (!step.error || !rebaselineInfo || !(supportedMatchers as any)[rebaselineInfo.matcherName])
       return;
     this._failedSteps.push(step);
     this._rebaselineInfos.push(rebaselineInfo);
@@ -63,9 +68,24 @@ export class RebaselineLog {
 }
 
 export async function rebaselineCommand() {
-  const rawRequests: RawRebaselineRequest[] = JSON.parse(await fs.promises.readFile('./rebaseline.json', 'utf8'));
-  const requests = new Set(await RebaselineRequest.fromJSON(rawRequests));
+  const requests = await readRequests();
+  const appliedRequests = [];
+  for (const request of requests) {
+    const matcher = request.sourceCode.findMatcher(request.matcherName, request.offset.value);
+    if (!matcher)
+      throw new Error('internal error: failed to process');
+    await (supportedMatchers as any)[request.matcherName](matcher, request);
+    appliedRequests.push(request);
+    
+  }
+  const changedSourceCodes = new Set(appliedRequests.map((r: RebaselineRequest) => r.sourceCode));
+  await Promise.all([...changedSourceCodes].map((sc: SourceCode) => sc.save()));
+  console.log(`Updated ${appliedRequests.length} expectations`);
+  await saveRequests([]);
+}
 
+export async function rebaselineInteractiveCommand() {
+  const requests = new Set(await readRequests());
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -92,17 +112,6 @@ export async function rebaselineCommand() {
     }
   }
   rl.close();
-
-  /*
-  for (const code of await Promise.all([...sourceCodesCache.values()])) {
-    // await code.save();
-    console.log(`=====================`);
-    console.log(code.filepath);
-    console.log(`---------------------`);
-    console.log(code.code);
-    console.log(`=====================`);
-  }
-  */
 }
 
 type RawRebaselineRequest = {
@@ -256,7 +265,7 @@ export class SourceCode {
         const { node } = path;
         if (!types.isMemberExpression(node.callee) || !types.isIdentifier(node.callee.property) || !((supportedMatchers as any)[node.callee.property.name]))
           return;
-        if (node.arguments.length && !types.isLiteral(node.arguments[0]))
+        if (node.arguments.length && !(types.isLiteral(node.arguments[0]) || types.isUnaryExpression(node.arguments[0])))
           return;
         const argument = node.arguments.length ? node.arguments[0] : undefined;
         this._matchers!.push({

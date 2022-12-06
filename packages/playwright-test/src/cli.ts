@@ -26,7 +26,7 @@ import { stopProfiling, startProfiling } from './profiler';
 import type { TestFileFilter } from './util';
 import { createTitleMatcher } from './util';
 import { showHTMLReport } from './reporters/html';
-import { rebaselineCommand } from './rebaseline';
+import { rebaselineCommand, rebaselineInteractiveCommand } from './rebaseline';
 import { baseFullConfig, defaultTimeout, fileIsModule } from './loader';
 import type { TraceMode } from './types';
 
@@ -116,9 +116,13 @@ Examples:
 
 function addRebaselineCommand(program: Command) {
   const command = program.command('rebase');
+  command.option('-i,--interactive', `Interactive rebaseline expectations`);
   command.description('update expect statements to make tests pass ');
-  command.action((report, options) => {
-    rebaselineCommand();
+  command.action((options) => {
+    if (options.interactive)
+      rebaselineInteractiveCommand();
+    else
+      rebaselineCommand();
   });
 }
 
