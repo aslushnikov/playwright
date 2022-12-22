@@ -39,7 +39,7 @@ RUN mkdir /ms-playwright && \
     npm i /tmp/playwright-core.tar.gz && \
     npx playwright mark-docker-image "${DOCKER_IMAGE_NAME_TEMPLATE}" && \
     npx playwright install --with-deps && \
-    npx playwright docker install-server-deps && \
+    npx playwright container install-services && \
     rm /tmp/playwright-core.tar.gz && \
     chmod -R 777 /ms-playwright && \
     rm -rf /var/lib/apt/lists/*
@@ -47,4 +47,4 @@ RUN mkdir /ms-playwright && \
 WORKDIR /ms-playwright-agent
 ENV DISPLAY_NUM=99
 ENV DISPLAY=:99
-ENTRYPOINT npx playwright docker run-server
+ENTRYPOINT npx playwright container entrypoint

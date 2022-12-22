@@ -19,6 +19,9 @@ const fs = require('fs');
 const path = require('path');
 const { debug, program } = require('../lib/utilsBundle');
 const { ProxyServer } = require('../lib/third_party/http_proxy');
+const { createGuid } = require('../lib/utils');
+const { selfDestruct } = require('../lib/cli/driver');
+const { PlaywrightServer } = require('../lib/remote/playwrightServer');
 
 const debugLog = debug('pw:proxy');
 
@@ -26,25 +29,31 @@ program
     .command('start')
     .description('reverse proxy for novnc and playwright server')
     .option('--port <number>', 'port number')
-    .option('--server-endpoint <url>', 'Playwright Server endpoint')
     .option('--novnc-endpoint <url>', 'novnc server endpoint')
-    .option('--novnc-ws-path <string>', 'novnc websocket path')
     .action(async function(options) {
-      launchReverseProxy(options.port, options.serverEndpoint, options.novncEndpoint, options.novncWsPath);
+      launchContainerAgent(options.port, options.novncEndpoint);
     });
 
 program.parse(process.argv);
 
-async function launchReverseProxy(port, serverEndpoint, novncEndpoint, novncWSPath) {
+async function launchContainerAgent(port, novncEndpoint) {
+  const novncWSPath = createGuid();
+  const server = new PlaywrightServer({
+    path: '/' + createGuid(),
+    maxConnections: Infinity,
+    browserProxyMode: 'client',
+    ownedByTetherClient: false,
+  });
+  await server.listen(undefined);
+  const serverEndpoint = server.address();
+  process.on('exit', () => server.close().catch(console.error));
+  process.stdin.on('close', () => selfDestruct());
+
   const vncProxy = new ProxyServer(novncEndpoint, debugLog);
   const serverProxy = new ProxyServer(serverEndpoint, debugLog);
 
   const httpServer = http.createServer((request, response) => {
     if (request.url === '/' && request.method === 'GET') {
-      response.writeHead(200, {
-        'content-type': 'text/html',
-      }).end(fs.readFileSync(path.join(__dirname, 'container_landing.html'), 'utf-8'));
-    } else if ((request.url === '/screen' || request.url === '/screen/') && request.method === 'GET') {
       response.writeHead(307, {
         Location: `/screen/?resize=scale&autoconnect=1&path=${novncWSPath}`,
       }).end();
@@ -62,8 +71,9 @@ async function launchReverseProxy(port, serverEndpoint, novncEndpoint, novncWSPa
     else
       serverProxy.ws(request, socket, head);
   });
-  httpServer.listen(port, () => {
-    console.log('Playwright container listening on', port);
+  httpServer.listen(port, '0.0.0.0', () => {
+    const { port } = httpServer.address();
+    console.log(`Playwright Container running on http://localhost:${port}`);
   });
 }
 

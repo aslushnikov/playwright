@@ -70,9 +70,9 @@ mkdir /root/.fluxbox
 cat <<'EOF' > /root/.fluxbox/menu
   [begin] (fluxbox)
     [submenu] (Browsers) {}
-      [exec] (Chromium) { /ms-playwright-agent/node_modules/.bin/playwright docker launch --endpoint http://127.0.0.1:5400 --browser chromium } <>
-      [exec] (Firefox) { /ms-playwright-agent/node_modules/.bin/playwright docker launch --endpoint http://127.0.0.1:5400 --browser firefox  } <>
-      [exec] (WebKit) { /ms-playwright-agent/node_modules/.bin/playwright docker launch --endpoint http://127.0.0.1:5400 --browser webkit  } <>
+      [exec] (Chromium) { /ms-playwright-agent/node_modules/.bin/playwright container launch --endpoint http://127.0.0.1:5400 --browser chromium } <>
+      [exec] (Firefox) { /ms-playwright-agent/node_modules/.bin/playwright container launch --endpoint http://127.0.0.1:5400 --browser firefox  } <>
+      [exec] (WebKit) { /ms-playwright-agent/node_modules/.bin/playwright container launch --endpoint http://127.0.0.1:5400 --browser webkit  } <>
     [end]
     [include] (/etc/X11/fluxbox/fluxbox-menu)
   [end]

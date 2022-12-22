@@ -22,7 +22,6 @@ import type { BrowserType } from '../client/browserType';
 import type { LaunchServerOptions } from '../client/types';
 import { createPlaywright, DispatcherConnection, RootDispatcher, PlaywrightDispatcher } from '../server';
 import { IpcTransport, PipeTransport } from '../protocol/transport';
-import { PlaywrightServer } from '../remote/playwrightServer';
 import { gracefullyCloseAll } from '../utils/processLauncher';
 
 export function printApiJson() {
@@ -76,7 +75,7 @@ export async function launchBrowserServer(browserName: string, configFile?: stri
   console.log(server.wsEndpoint());
 }
 
-function selfDestruct() {
+export function selfDestruct() {
   // Force exit after 30 seconds.
   setTimeout(() => process.exit(0), 30000);
   // Meanwhile, try to gracefully close all browsers.

@@ -361,27 +361,24 @@ export function addDockerCLI(program: Command) {
         }
       });
 
-  dockerCommand.command('install-server-deps', { hidden: true })
-      .description('install run-server dependencies')
+  const ctrCommand = program.command('container', { hidden: true })
+      .description(`Manage container integration (EXPERIMENTAL)`);
+
+  ctrCommand.command('install-services', { hidden: true })
+      .description('install services required to run container agent')
       .action(async function() {
         const { code } = await spawnAsync('bash', [path.join(__dirname, '..', '..', 'bin', 'container_install_deps.sh')], { stdio: 'inherit' });
         if (code !== 0)
           throw new Error('Failed to install server dependencies!');
       });
 
-  dockerCommand.command('run-server', { hidden: true })
-      .description('run playwright server')
+  ctrCommand.command('entrypoint', { hidden: true })
+      .description('launch services & container agent')
       .action(async function() {
-        await spawnAsync('bash', [path.join(__dirname, '..', '..', 'bin', 'container_run_server.sh')], { stdio: 'inherit' });
+        await spawnAsync('bash', [path.join(__dirname, '..', '..', 'bin', 'container_entrypoint.sh')], { stdio: 'inherit' });
       });
 
-  dockerCommand.command('print-status-json', { hidden: true })
-      .description('print docker status')
-      .action(async function(options) {
-        await printDockerStatus();
-      });
-
-  dockerCommand.command('launch', { hidden: true })
+  ctrCommand.command('launch', { hidden: true })
       .description('launch browser in container')
       .option('--browser <name>', 'browser to launch')
       .option('--endpoint <url>', 'server endpoint')
@@ -420,8 +417,8 @@ export function addDockerCLI(program: Command) {
         await context.newPage();
       });
 
-  dockerCommand.command('tether', { hidden: true })
-      .description('tether local network to the playwright server')
+  ctrCommand.command('tether', { hidden: true })
+      .description('tether local network to the container agent')
       .option('--endpoint <url>', 'server endpoint')
       .action(async function(options: { endpoint: string }) {
         await tetherHostNetwork(options.endpoint);
