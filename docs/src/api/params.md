@@ -29,12 +29,27 @@ value can be changed by using the [`method: BrowserContext.setDefaultTimeout`].
 When true, the call requires selector to resolve to a single element. If given selector resolves to more
 than one element, the call throws an exception.
 
+## template-js-input-timeout-default-value
+* langs: js
+
+Disabled by default. See [timeouts guide](../test-timeouts.md#action-and-navigation-timeouts) for more details.
+
+If used outside of tests, defaults to 30 seconds.
+
+## template-python-java-csharp-input-timeout-default-value
+* langs: python, java, csharp
+
+Defaults to 30 seconds.
+
 ## input-timeout
 - `timeout` <[float]>
 
-Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by
+Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by
 using the [`method: BrowserContext.setDefaultTimeout`] or
 [`method: Page.setDefaultTimeout`] methods.
+
+%%-template-js-input-timeout-default-value-%%
+%%-template-python-java-csharp-input-timeout-default-value-%%
 
 ## input-no-wait-after
 - `noWaitAfter` <[boolean]>

@@ -309,6 +309,9 @@ function applyTemplates(body, params) {
       node.children = node.children.filter(child => !child.text || !child.text.includes('-inline- = %%'));
   };
 
+  for (const node of paramsMap.values())
+    visit(node, null);
+
   for (const node of body)
     visit(node, null);
 

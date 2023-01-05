@@ -1864,10 +1864,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -1948,10 +1951,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -2065,10 +2071,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -2128,10 +2137,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -2197,10 +2209,13 @@ export interface Page {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -2358,10 +2373,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -2384,10 +2402,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -2461,10 +2482,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -2858,10 +2882,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -2889,10 +2916,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -2914,10 +2944,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -2944,10 +2977,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -2969,10 +3005,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -3000,10 +3039,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -3026,10 +3068,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -3051,10 +3096,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -3374,10 +3422,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -3614,10 +3665,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<Array<string>>;
@@ -3676,10 +3730,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -3821,10 +3878,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -3925,10 +3985,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -3957,10 +4020,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -4015,10 +4081,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -4075,10 +4144,13 @@ export interface Page {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -5329,10 +5401,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -5415,10 +5490,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -5502,10 +5580,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -5565,10 +5646,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -5620,10 +5704,13 @@ export interface Frame {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -5674,10 +5761,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -5700,10 +5790,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -5765,10 +5858,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -6100,10 +6196,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -6131,10 +6230,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -6156,10 +6258,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -6186,10 +6291,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -6211,10 +6319,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -6242,10 +6353,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -6268,10 +6382,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -6290,10 +6407,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -6443,10 +6563,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -6537,10 +6660,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<Array<string>>;
@@ -6599,10 +6725,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -6702,10 +6831,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -6767,10 +6899,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -6799,10 +6934,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -6855,10 +6993,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -6915,10 +7056,13 @@ export interface Frame {
     strict?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -8883,10 +9027,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -8956,10 +9103,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9032,10 +9182,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9110,10 +9263,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9173,10 +9329,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9207,10 +9366,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
    */
   inputValue(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -9290,10 +9452,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9360,10 +9525,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     scale?: "css"|"device";
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9384,10 +9552,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
    */
   scrollIntoViewIfNeeded(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9467,10 +9638,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<Array<string>>;
@@ -9491,10 +9665,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     force?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9540,10 +9717,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9604,10 +9784,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9658,10 +9841,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9716,10 +9902,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9765,10 +9954,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -9800,10 +9992,13 @@ export interface ElementHandle<T=Node> extends JSHandle<T> {
    */
   waitForElementState(state: "visible"|"hidden"|"stable"|"enabled"|"disabled"|"editable", options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;}
@@ -9935,10 +10130,13 @@ export interface Locator {
    */
   blur(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -9968,10 +10166,13 @@ export interface Locator {
    */
   boundingBox(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|{
@@ -10037,10 +10238,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -10075,10 +10279,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -10146,10 +10353,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -10222,10 +10432,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -10273,10 +10486,13 @@ export interface Locator {
    */
   dispatchEvent(type: string, eventInit?: EvaluationArgument, options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -10336,10 +10552,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -10382,10 +10601,13 @@ export interface Locator {
    */
   evaluateHandle(pageFunction: Function|string, arg?: EvaluationArgument, options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<JSHandle>;
@@ -10418,10 +10640,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -10471,10 +10696,13 @@ export interface Locator {
    */
   focus(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -10501,10 +10729,13 @@ export interface Locator {
    */
   getAttribute(name: string, options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -10779,10 +11010,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -10799,10 +11033,13 @@ export interface Locator {
    */
   innerHTML(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -10813,10 +11050,13 @@ export interface Locator {
    */
   innerText(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -10831,10 +11071,13 @@ export interface Locator {
    */
   inputValue(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<string>;
@@ -10845,10 +11088,13 @@ export interface Locator {
    */
   isChecked(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -10859,10 +11105,13 @@ export interface Locator {
    */
   isDisabled(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -10873,10 +11122,13 @@ export interface Locator {
    */
   isEditable(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -10887,10 +11139,13 @@ export interface Locator {
    */
   isEnabled(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<boolean>;
@@ -11003,10 +11258,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -11032,10 +11290,13 @@ export interface Locator {
    */
   scrollIntoViewIfNeeded(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -11127,10 +11388,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<Array<string>>;
@@ -11151,10 +11415,13 @@ export interface Locator {
     force?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -11200,10 +11467,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -11264,10 +11534,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -11318,10 +11591,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -11338,10 +11614,13 @@ export interface Locator {
    */
   textContent(options?: {
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<null|string>;
@@ -11385,10 +11664,13 @@ export interface Locator {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -11434,10 +11716,13 @@ export interface Locator {
     };
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
 
@@ -11482,10 +11767,13 @@ export interface Locator {
     state?: "attached"|"detached"|"visible"|"hidden";
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;}
@@ -16030,10 +16318,13 @@ export interface FileChooser {
     noWaitAfter?: boolean;
 
     /**
-     * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-     * by using the
+     * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
      * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
      * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+     *
+     * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+     *
+     * If used outside of tests, defaults to 30 seconds.
      */
     timeout?: number;
   }): Promise<void>;
@@ -18502,10 +18793,13 @@ export interface LocatorScreenshotOptions {
   scale?: "css"|"device";
 
   /**
-   * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-   * by using the
+   * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
    * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
    * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+   *
+   * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+   *
+   * If used outside of tests, defaults to 30 seconds.
    */
   timeout?: number;
 
@@ -18534,10 +18828,13 @@ interface ElementHandleWaitForSelectorOptions {
   strict?: boolean;
 
   /**
-   * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-   * by using the
+   * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
    * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
    * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+   *
+   * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+   *
+   * If used outside of tests, defaults to 30 seconds.
    */
   timeout?: number;
 }
@@ -18582,10 +18879,13 @@ interface PageWaitForSelectorOptions {
   strict?: boolean;
 
   /**
-   * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-   * by using the
+   * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
    * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
    * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+   *
+   * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+   *
+   * If used outside of tests, defaults to 30 seconds.
    */
   timeout?: number;
 }
@@ -18688,10 +18988,13 @@ export interface PageScreenshotOptions {
   scale?: "css"|"device";
 
   /**
-   * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed
-   * by using the
+   * Maximum time in milliseconds, pass `0` to disable timeout. The default value can be changed by using the
    * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
    * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+   *
+   * Disabled by default. See [timeouts guide](https://playwright.dev/docs/test-timeouts#action-and-navigation-timeouts) for more details.
+   *
+   * If used outside of tests, defaults to 30 seconds.
    */
   timeout?: number;
 
