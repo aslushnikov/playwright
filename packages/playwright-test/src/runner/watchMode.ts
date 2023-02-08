@@ -29,6 +29,7 @@ import chokidar from 'chokidar';
 import { WatchModeReporter } from './reporters';
 import { colors } from 'playwright-core/lib/utilsBundle';
 import { enquirer } from '../utilsBundle';
+import { Rebaseline } from '../rebaseline';
 
 class FSWatcher {
   private _dirtyFiles = new Set<string>();
@@ -186,8 +187,10 @@ async function runChangedTests(config: FullConfigInternal, failedTestIdCollector
 async function runTests(config: FullConfigInternal, failedTestIdCollector: Set<string>, projectsToIgnore?: Set<FullProjectInternal>, additionalFileMatcher?: Matcher) {
   const reporter = new Multiplexer([new WatchModeReporter()]);
   const taskRunner = createTaskRunnerForWatch(config, reporter, projectsToIgnore, additionalFileMatcher);
+  const rebaseline = new Rebaseline();
   const context: TaskRunnerState = {
     config,
+    rebaseline,
     reporter,
     phases: [],
   };

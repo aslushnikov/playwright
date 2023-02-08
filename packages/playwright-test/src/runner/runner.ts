@@ -25,6 +25,7 @@ import type { TaskRunnerState } from './tasks';
 import type { FullConfigInternal } from '../common/types';
 import { colors } from 'playwright-core/lib/utilsBundle';
 import { runWatchModeLoop } from './watchMode';
+import { Rebaseline } from '../rebaseline';
 
 export class Runner {
   private _config: FullConfigInternal;
@@ -56,11 +57,13 @@ export class Runner {
     webServerPluginsForConfig(config).forEach(p => config._internal.plugins.push({ factory: p }));
 
     const reporter = await createReporter(config, listOnly ? 'list' : watchMode ? 'watch' : 'run');
+    const rebaseline = new Rebaseline();
     const taskRunner = listOnly ? createTaskRunnerForList(config, reporter)
       : createTaskRunner(config, reporter, watchMode);
 
     const context: TaskRunnerState = {
       config,
+      rebaseline,
       reporter,
       phases: [],
     };

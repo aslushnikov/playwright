@@ -200,7 +200,7 @@ export class TestInfoImpl implements TestInfo {
     const firstErrorIndex = this.errors.length;
     const step: TestStepInternal = {
       ...data,
-      complete: result => {
+      complete: (result, rebaselineInfo) => {
         if (callbackHandled)
           return;
         callbackHandled = true;
@@ -222,6 +222,7 @@ export class TestInfoImpl implements TestInfo {
           stepId,
           wallTime: Date.now(),
           error,
+          rebaselineInfo,
         };
         this._onStepEnd(payload);
       }

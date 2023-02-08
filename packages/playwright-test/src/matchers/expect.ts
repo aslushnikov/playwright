@@ -15,6 +15,7 @@
  */
 
 import { pollAgainstTimeout } from 'playwright-core/lib/utils';
+import { updateSnapshotsMode, isSupportedMatcher } from '../rebaseline';
 import path from 'path';
 import {
   toBeChecked,
@@ -100,7 +101,7 @@ export const printReceivedStringContainExpectedResult = (
 type ExpectMessageOrOptions = undefined | string | { message?: string, timeout?: number, intervals?: number[] };
 
 function createExpect(actual: unknown, messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
-  return new Proxy(expectLibrary(actual), new ExpectMetaInfoProxyHandler(messageOrOptions, isSoft, isPoll, generator));
+  return new Proxy(expectLibrary(actual), new ExpectMetaInfoProxyHandler(actual, messageOrOptions, isSoft, isPoll, generator));
 }
 
 export const expect: Expect = new Proxy(expectLibrary, {
@@ -162,9 +163,11 @@ type ExpectMetaInfo = {
 
 class ExpectMetaInfoProxyHandler {
   private _info: ExpectMetaInfo;
+  private _actual: any;
 
-  constructor(messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
+  constructor(actual: any, messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
     this._info = { isSoft, isPoll, generator, isNot: false };
+    this._actual = actual;
     if (typeof messageOrOptions === 'string') {
       this._info.message = messageOrOptions;
     } else {
@@ -183,10 +186,14 @@ class ExpectMetaInfoProxyHandler {
         this._info.isNot = !this._info.isNot;
       return new Proxy(matcher, this);
     }
+    const rebaselineInfo = {
+      matcherName,
+      value: this._actual,
+    };
     if (this._info.isPoll) {
       if ((customMatchers as any)[matcherName] || matcherName === 'resolves' || matcherName === 'rejects')
         throw new Error(`\`expect.poll()\` does not support "${matcherName}" matcher.`);
-      matcher = (...args: any[]) => pollMatcher(matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
+      matcher = (...args: any[]) => pollMatcher(rebaselineInfo, matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
     }
     return (...args: any[]) => {
       const testInfo = currentTestInfo();
@@ -208,6 +215,28 @@ class ExpectMetaInfoProxyHandler {
       testInfo.currentStep = step;
 
       const reportStepError = (jestError: Error) => {
+        // We want to mute some errors if these errors will be re-baselined.
+        const updateSnapshots = updateSnapshotsMode(testInfo);
+        console.log(`
+
+            args length: ${args.length}
+
+        `);
+        if (isSupportedMatcher(matcherName) && args.length && updateSnapshots === 'all') {
+          /* eslint-disable no-console */
+          console.log(step.title + ' does not match, writing actual.');
+          step.complete({}, rebaselineInfo);
+          return;
+        }
+
+        if (isSupportedMatcher(matcherName) && !args.length && updateSnapshots === 'missing') {
+          const message = `Value doesn't exist at ${step.title}, writing actual.`;
+          /* eslint-disable no-console */
+          testInfo._failWithError(serializeError(new Error(message)), false /* isHardError */);
+          step.complete({}, rebaselineInfo);
+          return;
+        }
+
         const message = jestError.message;
         if (customMessage) {
           const messageLines = message.split('\n');
@@ -251,9 +280,10 @@ class ExpectMetaInfoProxyHandler {
   }
 }
 
-async function pollMatcher(matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
+async function pollMatcher(rebaselineInfo: any, matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
   const result = await pollAgainstTimeout<Error|undefined>(async () => {
     const value = await generator();
+    rebaselineInfo.value = value;
     let expectInstance = expectLibrary(value) as any;
     if (isNot)
       expectInstance = expectInstance.not;

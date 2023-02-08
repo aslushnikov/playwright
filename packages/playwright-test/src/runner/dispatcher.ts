@@ -23,6 +23,7 @@ import type { TestCase } from '../common/test';
 import { ManualPromise } from 'playwright-core/lib/utils';
 import { WorkerHost } from './workerHost';
 import type { TestGroup } from './testGroups';
+import type { Rebaseline } from '../rebaseline';
 import type { FullConfigInternal } from '../common/types';
 
 type TestResultData = {
@@ -47,10 +48,12 @@ export class Dispatcher {
   private _reporter: Reporter;
   private _hasWorkerErrors = false;
   private _failureCount = 0;
+  private _rebaseline: Rebaseline;
 
-  constructor(config: FullConfigInternal, reporter: Reporter) {
+  constructor(config: FullConfigInternal, reporter: Reporter, rebaseline: Rebaseline) {
     this._config = config;
     this._reporter = reporter;
+    this._rebaseline = rebaseline;
   }
 
   private _processFullySkippedJobs() {
@@ -302,6 +305,7 @@ export class Dispatcher {
       stepStack.delete(step);
       steps.delete(params.stepId);
       this._reporter.onStepEnd?.(data.test, result, step);
+      this._rebaseline.onStepEnd(step, params.rebaselineInfo);
     };
     worker.on('stepEnd', onStepEnd);
 

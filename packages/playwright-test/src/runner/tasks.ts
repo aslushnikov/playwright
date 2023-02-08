@@ -30,6 +30,7 @@ import type { FullConfigInternal, FullProjectInternal } from '../common/types';
 import { loadAllTests, loadGlobalHook } from './loadUtils';
 import { createFileMatcherFromFilters } from '../util';
 import type { Matcher } from '../util';
+import type { Rebaseline } from '../rebaseline';
 
 const removeFolderAsync = promisify(rimraf);
 const readDirAsync = promisify(fs.readdir);
@@ -42,6 +43,7 @@ type ProjectWithTestGroups = {
 
 export type TaskRunnerState = {
   reporter: Multiplexer;
+  rebaseline: Rebaseline;
   config: FullConfigInternal;
   rootSuite?: Suite;
   phases: {
@@ -57,6 +59,7 @@ export function createTaskRunner(config: FullConfigInternal, reporter: Multiplex
     taskRunner.addTask('plugin setup', createPluginSetupTask(plugin, doNotTeardown));
   if (config.globalSetup || config.globalTeardown)
     taskRunner.addTask('global setup', createGlobalSetupTask(doNotTeardown));
+  taskRunner.addTask('initialize rebaseline', createRebaselineTask());
   taskRunner.addTask('load tests', createLoadTask('in-process'));
   taskRunner.addTask('clear output', createRemoveOutputDirsTask());
   addCommonTasks(taskRunner, config);
@@ -92,6 +95,13 @@ export function createTaskRunnerForList(config: FullConfigInternal, reporter: Mu
   });
   return taskRunner;
 }
+
+function createRebaselineTask(): Task<TaskRunnerState> {
+  return async ({ rebaseline }) => {
+    return () => rebaseline.save();
+  };
+}
+
 
 function createPluginSetupTask(plugin: TestRunnerPluginRegistration, doNotTeardown: boolean): Task<TaskRunnerState> {
   return async ({ config, reporter }) => {
@@ -160,7 +170,7 @@ function createLoadTask(mode: 'out-of-process' | 'in-process', projectsToIgnore 
 
 function createTestGroupsTask(): Task<TaskRunnerState> {
   return async context => {
-    const { config, rootSuite, reporter } = context;
+    const { config, rootSuite, reporter, rebaseline } = context;
     for (const phase of buildPhases(rootSuite!.suites)) {
       // Go over the phases, for each phase create list of task groups.
       const projects: ProjectWithTestGroups[] = [];
@@ -175,7 +185,7 @@ function createTestGroupsTask(): Task<TaskRunnerState> {
 
       const testGroupsInPhase = projects.reduce((acc, project) => acc + project.testGroups.length, 0);
       debug('pw:test:task')(`running phase with ${projects.map(p => p.project.name).sort()} projects, ${testGroupsInPhase} testGroups`);
-      context.phases.push({ dispatcher: new Dispatcher(config, reporter), projects });
+      context.phases.push({ dispatcher: new Dispatcher(config, reporter, rebaseline), projects });
       context.config._internal.maxConcurrentTestGroups = Math.max(context.config._internal.maxConcurrentTestGroups, testGroupsInPhase);
     }
   };

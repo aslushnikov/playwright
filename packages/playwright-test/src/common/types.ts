@@ -31,13 +31,17 @@ export type FixturesWithLocation = {
 export type Annotation = { type: string, description?: string };
 
 export interface TestStepInternal {
-  complete(result: { error?: Error | TestInfoError }): void;
+  complete(result: { error?: Error | TestInfoError }, rebaselineInfo?: { matcherName: string, value: any }): void;
   title: string;
   category: string;
   canHaveChildren: boolean;
   forceNoParent: boolean;
   location?: Location;
   refinedTitle?: string;
+  rebaselineInfo?: {
+    matcherName: string;
+    value: any;
+  }
 }
 
 type ConfigInternal = {
