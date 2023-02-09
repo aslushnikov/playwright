@@ -98,7 +98,7 @@ export function createTaskRunnerForList(config: FullConfigInternal, reporter: Mu
 
 function createRebaselineTask(): Task<TaskRunnerState> {
   return async ({ rebaseline }) => {
-    return () => rebaseline.save();
+    return () => rebaseline.performRebaselines();
   };
 }
 

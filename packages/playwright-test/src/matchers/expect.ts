@@ -217,11 +217,6 @@ class ExpectMetaInfoProxyHandler {
       const reportStepError = (jestError: Error) => {
         // We want to mute some errors if these errors will be re-baselined.
         const updateSnapshots = updateSnapshotsMode(testInfo);
-        console.log(`
-
-            args length: ${args.length}
-
-        `);
         if (isSupportedMatcher(matcherName) && args.length && updateSnapshots === 'all') {
           /* eslint-disable no-console */
           console.log(step.title + ' does not match, writing actual.');

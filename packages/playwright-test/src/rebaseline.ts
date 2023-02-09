@@ -73,7 +73,7 @@ export class Rebaseline {
     requestIdToRequests.set(id, request);
   }
 
-  async save() {
+  async performRebaselines() {
     if (!this._requests.size)
       return;
     const allSourceCodes: Set<SourceCode> = new Set();
