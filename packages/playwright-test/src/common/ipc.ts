@@ -97,10 +97,14 @@ export type StepEndPayload = {
   refinedTitle?: string;
   wallTime: number;  // milliseconds since unix epoch
   error?: TestInfoError;
-  rebaselineInfo?: {
-    matcherName: string;
-    value: any;
-  }
+};
+
+export type RebaselinePayload = {
+  file: string;
+  lineNumber: number;
+  columnNumber: number;
+  matcherName: string;
+  newExpected: any;
 };
 
 export type TestEntry = {

@@ -255,7 +255,8 @@ export class WorkerMain extends ProcessRunner {
   private async _runTest(test: TestCase, retry: number, nextTest: TestCase | undefined) {
     const testInfo = new TestInfoImpl(this._config, this._project, this._params, test, retry,
         stepBeginPayload => this.dispatchEvent('stepBegin', stepBeginPayload),
-        stepEndPayload => this.dispatchEvent('stepEnd', stepEndPayload));
+        stepEndPayload => this.dispatchEvent('stepEnd', stepEndPayload),
+        rebaselinePayload => this.dispatchEvent('rebaseline', rebaselinePayload));
 
     const processAnnotation = (annotation: Annotation) => {
       testInfo.annotations.push(annotation);

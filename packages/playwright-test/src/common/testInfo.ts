@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import { monotonicTime } from 'playwright-core/lib/utils';
 import type { TestInfoError, TestInfo, TestStatus } from '../../types/test';
-import type { StepBeginPayload, StepEndPayload, WorkerInitParams } from './ipc';
+import type { StepBeginPayload, StepEndPayload, WorkerInitParams, RebaselinePayload } from './ipc';
 import type { TestCase } from './test';
 import { TimeoutManager } from './timeoutManager';
 import type { Annotation, FullConfigInternal, FullProjectInternal, TestStepInternal } from './types';
@@ -33,6 +33,7 @@ export type TestInfoErrorState = {
 export class TestInfoImpl implements TestInfo {
   private _onStepBegin: (payload: StepBeginPayload) => void;
   private _onStepEnd: (payload: StepEndPayload) => void;
+  private _scheduleRebaseline: (payload: RebaselinePayload) => void;
   readonly _test: TestCase;
   readonly _timeoutManager: TimeoutManager;
   readonly _startTime: number;
@@ -94,10 +95,12 @@ export class TestInfoImpl implements TestInfo {
     retry: number,
     onStepBegin: (payload: StepBeginPayload) => void,
     onStepEnd: (payload: StepEndPayload) => void,
+    scheduleRebaseline: (payload: RebaselinePayload) => void,
   ) {
     this._test = test;
     this._onStepBegin = onStepBegin;
     this._onStepEnd = onStepEnd;
+    this._scheduleRebaseline = scheduleRebaseline;
     this._startTime = monotonicTime();
     this._startWallTime = Date.now();
 
@@ -194,13 +197,23 @@ export class TestInfoImpl implements TestInfo {
     }
   }
 
+  scheduleRebaseline(file: string, lineNumber: number, columnNumber: number, matcherName: string, newExpected: any) {
+    this._scheduleRebaseline({
+      file,
+      lineNumber,
+      columnNumber,
+      matcherName,
+      newExpected,
+    });
+  }
+
   _addStep(data: Omit<TestStepInternal, 'complete'>): TestStepInternal {
     const stepId = `${data.category}@${data.title}@${++this._lastStepId}`;
     let callbackHandled = false;
     const firstErrorIndex = this.errors.length;
     const step: TestStepInternal = {
       ...data,
-      complete: (result, rebaselineInfo) => {
+      complete: (result) => {
         if (callbackHandled)
           return;
         callbackHandled = true;
@@ -222,7 +235,6 @@ export class TestInfoImpl implements TestInfo {
           stepId,
           wallTime: Date.now(),
           error,
-          rebaselineInfo,
         };
         this._onStepEnd(payload);
       }

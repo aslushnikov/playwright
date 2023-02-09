@@ -28,7 +28,10 @@ test('should update toBe matcher', async ({ runInlineTest }, testInfo) => {
     'a.spec.js': `
       pwt.test('is a test', async ({ }) => {
         expect(1).toBe(2);
-        expect('foo').toBe("bar");
+        expect('foo-1').toBe("qqq");
+        expect('foo-2').toBe({ foo: 'baz' });
+        expect('foo-3').toBe({ 'foo': 'bar' });
+        expect('foo-4').toBe({ ['foo']: 'bar' });
       });
     `
   }, { 'rebaseline-matchers': true });
@@ -36,7 +39,10 @@ test('should update toBe matcher', async ({ runInlineTest }, testInfo) => {
   expect(result.exitCode).toBe(0);
   const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
   expect(source).toContain('expect(1).toBe(1)');
-  expect(source).toContain(`expect('foo').toBe("foo")`);
+  expect(source).toContain(`expect('foo-1').toBe("foo-1")`);
+  expect(source).toContain(`expect('foo-2').toBe("foo-2")`);
+  expect(source).toContain(`expect('foo-3').toBe("foo-3")`);
+  expect(source).toContain(`expect('foo-4').toBe("foo-4")`);
 });
 
 test('should fill matchers when expectation is missing', async ({ runInlineTest }, testInfo) => {
@@ -60,11 +66,13 @@ test('should bail out if expected value has identifier', async ({ runInlineTest 
     'a.spec.js': `
       pwt.test('should fail', async ({ }) => {
         const foo = 2;
-        expect(1).toBe(foo);
+        expect(1).toBe(foo); // line 8
+        expect(1).toBe({ foo }); // line 9
+        expect(1).toBe({ [foo]: 1 }); // line 10
       });
       pwt.test('should fail for complicated objects', async ({ }) => {
         const foo = 2;
-        expect(1).toBe({
+        expect(1).toBe({ // line 14
           foo: {
             bar: [1,2,3,{
               baz: Math.round(foo),
@@ -79,8 +87,9 @@ test('should bail out if expected value has identifier', async ({ runInlineTest 
   expect(result.passed).toBe(2);
   expect(result.failed).toBe(0);
   const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
-  expect(source).toContain('expect(1).toBe(foo)');
   expect(result.output).toContain(`Error: Failed to perform the following rebaselines:`);
-  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:7`);
-  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:11`);
+  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:8`);
+  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:9`);
+  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:10`);
+  expect(result.output).toContain(`${testInfo.outputPath('a.spec.js')}:14`);
 });

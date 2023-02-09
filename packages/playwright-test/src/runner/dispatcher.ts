@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { TestBeginPayload, TestEndPayload, DonePayload, TestOutputPayload, StepBeginPayload, StepEndPayload, TeardownErrorsPayload, RunPayload, SerializedConfig } from '../common/ipc';
+import type { TestBeginPayload, TestEndPayload, DonePayload, TestOutputPayload, StepBeginPayload, StepEndPayload, TeardownErrorsPayload, RunPayload, SerializedConfig, RebaselinePayload } from '../common/ipc';
 import { serializeConfig } from '../common/ipc';
 import type { TestResult, Reporter, TestStep, TestError } from '../../types/testReporter';
 import type { Suite } from '../common/test';
@@ -201,6 +201,7 @@ export class Dispatcher {
       worker.removeListener('testEnd', onTestEnd);
       worker.removeListener('stepBegin', onStepBegin);
       worker.removeListener('stepEnd', onStepEnd);
+      worker.removeListener('rebaseline', onRebaseline);
       worker.removeListener('done', onDone);
       worker.removeListener('exit', onExit);
       doneCallback();
@@ -305,9 +306,13 @@ export class Dispatcher {
       stepStack.delete(step);
       steps.delete(params.stepId);
       this._reporter.onStepEnd?.(data.test, result, step);
-      this._rebaseline.onStepEnd(step, params.rebaselineInfo);
     };
     worker.on('stepEnd', onStepEnd);
+
+    const onRebaseline = (rebaselineRequest: RebaselinePayload) => {
+      this._rebaseline.addRebaseline(rebaselineRequest);
+    };
+    worker.on('rebaseline', onRebaseline);
 
     const onDone = (params: DonePayload & { unexpectedExitError?: TestError }) => {
       this._queuedOrRunningHashCount.set(worker.hash(), this._queuedOrRunningHashCount.get(worker.hash())! - 1);

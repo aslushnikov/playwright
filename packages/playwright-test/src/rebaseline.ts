@@ -15,9 +15,9 @@
  */
 
 import fs from 'fs';
-import { types, parse, traverse } from './common/babelBundle';
-import type { TestStep } from '../types/testReporter';
+import { types, parse, traverse, NodePath } from './common/babelBundle';
 import { TestInfoImpl } from './common/testInfo';
+import { RebaselinePayload } from './common/ipc';
 
 export function isSupportedMatcher(matcherName: string) {
   return matcherName === 'toBe' || matcherName === 'toEqual';
@@ -33,34 +33,15 @@ export function updateMatchersMode(testInfo: TestInfoImpl): 'all' | 'none' | 'mi
   return rebaselineMatchers === 'missing' && testInfo.retry < testInfo.project.retries ? 'none' : rebaselineMatchers;
 }
 
-type RebaselineRequest = {
-  matcherName: string;
-  lineNumber: number;
-  columnNumber: number;
-  file: string;
-  value: any;
-};
-
 export class Rebaseline {
   // Store rebaseline requests per-file. If multiple requests
   // for the same matcher come in, the last one wins.
-  _requests: Map<string, Map<string, RebaselineRequest>> = new Map();
+  _requests: Map<string, Map<string, RebaselinePayload>> = new Map();
 
-  onStepEnd(step: TestStep, rebaselineInfo: any) {
-    if (!step.location || !rebaselineInfo)
-      return;
-
-    const request = {
-      matcherName: rebaselineInfo.matcherName,
-      file: step.location.file,
-      lineNumber: step.location.line - 1,
-      columnNumber: step.location.column - 1,
-      value: rebaselineInfo.value,
-    };
-
+  addRebaseline(request: RebaselinePayload) {
     let requestIdToRequests = this._requests.get(request.file);
     if (!requestIdToRequests) {
-      requestIdToRequests = new Map<string, RebaselineRequest>();
+      requestIdToRequests = new Map<string, RebaselinePayload>();
       this._requests.set(request.file, requestIdToRequests);
     }
 
@@ -83,7 +64,7 @@ export class Rebaseline {
       requests.sort((r1, r2) => r1.lineNumber !== r2.lineNumber ? r2.lineNumber - r1.lineNumber : r2.columnNumber - r1.columnNumber);
 
       for (const request of requests) {
-        const offset = sourceCode.positionToOffset(request.lineNumber, request.columnNumber);
+        const offset = sourceCode.positionToOffset(request.lineNumber - 1, request.columnNumber - 1);
         const index = binarySearch(allMatchers, matcher => matcher.range.from - offset);
         const matcher = index !== -1 ? allMatchers[index] : undefined;
         if (!matcher || matcher.name !== request.matcherName) {
@@ -91,11 +72,11 @@ export class Rebaseline {
           continue;
         }
 
-        const newValue = JSON.stringify(request.value);
+        const newExpected = JSON.stringify(request.newExpected);
         if (matcher.argRange)
-          sourceCode.replace(matcher.argRange.from, matcher.argRange.to, newValue);
+          sourceCode.replace(matcher.argRange.from, matcher.argRange.to, newExpected);
         else
-          sourceCode.replace(matcher.range.from, matcher.range.to, matcher.name + '(' + newValue + ')');
+          sourceCode.replace(matcher.range.from, matcher.range.to, matcher.name + '(' + newExpected + ')');
       }
     }
     await Promise.all([...allSourceCodes].map((sc: SourceCode) => sc.save()));
@@ -185,14 +166,28 @@ function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatche
       const { node } = path;
       if (!types.isMemberExpression(node.callee) || !types.isIdentifier(node.callee.property) || !isSupportedMatcher(node.callee.property.name))
         return;
-      if (node.arguments.length && !(types.isLiteral(node.arguments[0]) || types.isUnaryExpression(node.arguments[0])))
-        return;
       const argument = node.arguments.length ? node.arguments[0] : undefined;
       let hasIdentifier = false;
       if (argument) {
-        path.get('arguments.0').traverse({
-          Identifier: (path) => { hasIdentifier = true; path.stop(); },
-        });
+        const argPath = path.get('arguments.0') as NodePath;
+        if (types.isIdentifier(argument)) {
+          hasIdentifier = true;
+        } else {
+          argPath.traverse({
+            Identifier: (path: NodePath) => {
+              // Object property keys identify as Identifier as well.
+              // Ignore these unless they are "computed": { [foo]: 'bar' }
+              if (path.parentPath && types.isObjectProperty(path.parentPath.node) && path.parentKey === 'key' ) {
+                hasIdentifier = path.parentPath.node.computed;
+              } else {
+                hasIdentifier = true;
+              }
+
+              if (hasIdentifier)
+                path.stop();
+            },
+          });
+        }
       }
       if (!hasIdentifier) {
         matchers.push({

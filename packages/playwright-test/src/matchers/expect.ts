@@ -186,14 +186,10 @@ class ExpectMetaInfoProxyHandler {
         this._info.isNot = !this._info.isNot;
       return new Proxy(matcher, this);
     }
-    const rebaselineInfo = {
-      matcherName,
-      value: this._actual,
-    };
     if (this._info.isPoll) {
       if ((customMatchers as any)[matcherName] || matcherName === 'resolves' || matcherName === 'rejects')
         throw new Error(`\`expect.poll()\` does not support "${matcherName}" matcher.`);
-      matcher = (...args: any[]) => pollMatcher(rebaselineInfo, matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
+      matcher = (...args: any[]) => pollMatcher(matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
     }
     return (...args: any[]) => {
       const testInfo = currentTestInfo();
@@ -217,18 +213,20 @@ class ExpectMetaInfoProxyHandler {
       const reportStepError = (jestError: Error) => {
         // We want to mute some errors if these errors will be re-baselined.
         const updateMatchers = updateMatchersMode(testInfo);
-        if (isSupportedMatcher(matcherName) && args.length && updateMatchers === 'all') {
+        if (step.location && isSupportedMatcher(matcherName) && args.length && updateMatchers === 'all') {
           /* eslint-disable no-console */
           console.log(step.title + ' does not match, will write actual.');
-          step.complete({}, rebaselineInfo);
+          testInfo.scheduleRebaseline(step.location.file, step.location.line, step.location.column, matcherName, this._actual);
+          step.complete({});
           return;
         }
 
-        if (isSupportedMatcher(matcherName) && !args.length && updateMatchers === 'missing') {
+        if (step.location && isSupportedMatcher(matcherName) && !args.length && updateMatchers === 'missing') {
           const message = `Value doesn't exist at ${step.title}, will write actual.`;
           /* eslint-disable no-console */
           testInfo._failWithError(serializeError(new Error(message)), false /* isHardError */);
-          step.complete({}, rebaselineInfo);
+          testInfo.scheduleRebaseline(step.location.file, step.location.line, step.location.column, matcherName, this._actual);
+          step.complete({});
           return;
         }
 
@@ -275,10 +273,9 @@ class ExpectMetaInfoProxyHandler {
   }
 }
 
-async function pollMatcher(rebaselineInfo: any, matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
+async function pollMatcher(matcherName: any, isNot: boolean, pollIntervals: number[] | undefined, timeout: number, generator: () => any, ...args: any[]) {
   const result = await pollAgainstTimeout<Error|undefined>(async () => {
     const value = await generator();
-    rebaselineInfo.value = value;
     let expectInstance = expectLibrary(value) as any;
     if (isNot)
       expectInstance = expectInstance.not;
