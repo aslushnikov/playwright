@@ -31,6 +31,7 @@ export type ConfigCLIOverrides = {
   timeout?: number;
   ignoreSnapshots?: boolean;
   updateSnapshots?: 'all'|'none'|'missing';
+  rebaselineMatchers?: 'all'|'none'|'missing';
   workers?: number;
   projects?: { name: string, use?: any }[],
   use?: any;

@@ -91,6 +91,7 @@ export interface FullConfig<TestArgs = {}, WorkerArgs = {}> {
   quiet: boolean;
   shard: { total: number, current: number } | null;
   updateSnapshots: 'all' | 'none' | 'missing';
+  rebaselineMatchers: 'all' | 'none' | 'missing';
   workers: number;
   webServer: TestConfigWebServer | null;
   configFile?: string;

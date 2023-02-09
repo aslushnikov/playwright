@@ -1228,6 +1228,27 @@ interface TestConfig {
   timeout?: number;
 
   /**
+   * Whether to update expected matchers with the actual results produced by the test run. Defaults to `'missing'`.
+   * - `'all'` - All tests that are executed will update supported matchers that did not match.
+   * - `'none'` - No matchers are updated.
+   * - `'missing'` - Missing matchers are updates, for example when authoring a new test and running it for the first
+   *   time. This is the default.
+   *
+   * **Usage**
+   *
+   * ```js
+   * // playwright.config.ts
+   * import { defineConfig } from '@playwright/test';
+   *
+   * export default defineConfig({
+   *   rebaselineMatchers: 'missing',
+   * });
+   * ```
+   *
+   */
+  rebaselineMatchers?: "all"|"none"|"missing";
+
+  /**
    * Whether to update expected snapshots with the actual results produced by the test run. Defaults to `'missing'`.
    * - `'all'` - All tests that are executed will update snapshots that did not match. Matching snapshots will not be
    *   updated.
@@ -1673,6 +1694,26 @@ export interface FullConfig<TestArgs = {}, WorkerArgs = {}> {
    *
    */
   updateSnapshots: 'all' | 'none' | 'missing';
+  /**
+   * Whether to update expected matchers with the actual results produced by the test run. Defaults to `'missing'`.
+   * - `'all'` - All tests that are executed will update supported matchers that did not match.
+   * - `'none'` - No matchers are updated.
+   * - `'missing'` - Missing matchers are updates, for example when authoring a new test and running it for the first
+   *   time. This is the default.
+   *
+   * **Usage**
+   *
+   * ```js
+   * // playwright.config.ts
+   * import { defineConfig } from '@playwright/test';
+   *
+   * export default defineConfig({
+   *   rebaselineMatchers: 'missing',
+   * });
+   * ```
+   *
+   */
+  rebaselineMatchers: 'all' | 'none' | 'missing';
   /**
    * The maximum number of concurrent worker processes to use for parallelizing tests. Can also be set as percentage of
    * logical CPU cores, e.g. `'50%'.`

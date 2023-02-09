@@ -15,7 +15,7 @@
  */
 
 import { pollAgainstTimeout } from 'playwright-core/lib/utils';
-import { updateSnapshotsMode, isSupportedMatcher } from '../rebaseline';
+import { updateMatchersMode, isSupportedMatcher } from '../rebaseline';
 import path from 'path';
 import {
   toBeChecked,
@@ -216,16 +216,16 @@ class ExpectMetaInfoProxyHandler {
 
       const reportStepError = (jestError: Error) => {
         // We want to mute some errors if these errors will be re-baselined.
-        const updateSnapshots = updateSnapshotsMode(testInfo);
-        if (isSupportedMatcher(matcherName) && args.length && updateSnapshots === 'all') {
+        const updateMatchers = updateMatchersMode(testInfo);
+        if (isSupportedMatcher(matcherName) && args.length && updateMatchers === 'all') {
           /* eslint-disable no-console */
-          console.log(step.title + ' does not match, writing actual.');
+          console.log(step.title + ' does not match, will write actual.');
           step.complete({}, rebaselineInfo);
           return;
         }
 
-        if (isSupportedMatcher(matcherName) && !args.length && updateSnapshots === 'missing') {
-          const message = `Value doesn't exist at ${step.title}, writing actual.`;
+        if (isSupportedMatcher(matcherName) && !args.length && updateMatchers === 'missing') {
+          const message = `Value doesn't exist at ${step.title}, will write actual.`;
           /* eslint-disable no-console */
           testInfo._failWithError(serializeError(new Error(message)), false /* isHardError */);
           step.complete({}, rebaselineInfo);

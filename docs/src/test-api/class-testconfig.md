@@ -867,6 +867,37 @@ export default defineConfig({
 });
 ```
 
+## property: TestConfig.rebaselineMatchers
+* since: v1.10
+- type: ?<[RebaselineMatchers]<"all"|"none"|"missing">>
+
+Whether to update expected matchers with the actual results produced by the test run. Defaults to `'missing'`.
+* `'all'` - All tests that are executed will update supported matchers that did not match.
+* `'none'` - No matchers are updated.
+* `'missing'` - Missing matchers are updates, for example when authoring a new test and running it for the first time. This is the default.
+
+**Usage**
+
+```js tab=js-js
+// playwright.config.js
+// @ts-check
+
+const { defineConfig } = require('@playwright/test');
+
+module.exports = defineConfig({
+  rebaselineMatchers: 'missing',
+});
+```
+
+```js tab=js-ts
+// playwright.config.ts
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  rebaselineMatchers: 'missing',
+});
+```
+
 ## property: TestConfig.updateSnapshots
 * since: v1.10
 - type: ?<[UpdateSnapshots]<"all"|"none"|"missing">>

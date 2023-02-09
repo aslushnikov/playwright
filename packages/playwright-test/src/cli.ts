@@ -63,6 +63,7 @@ function addTestCommand(program: Command) {
   command.option('--trace <mode>', `Force tracing mode, can be ${kTraceModes.map(mode => `"${mode}"`).join(', ')}`);
   command.option('--watch', `Run watch mode`);
   command.option('-u, --update-snapshots', `Update snapshots with actual results (default: only create missing snapshots)`);
+  command.option('-r, --rebaseline-matchers', `Rebaseline matchers`);
   command.option('-x', `Stop after the first failure`);
   command.action(async (args, opts) => {
     try {
@@ -213,6 +214,7 @@ function overridesFromOptions(options: { [key: string]: any }): ConfigCLIOverrid
     timeout: options.timeout ? parseInt(options.timeout, 10) : undefined,
     ignoreSnapshots: options.ignoreSnapshots ? !!options.ignoreSnapshots : undefined,
     updateSnapshots: options.updateSnapshots ? 'all' as const : undefined,
+    rebaselineMatchers: options.rebaselineMatchers ? 'all' as const : undefined,
     workers: options.workers,
   };
 }

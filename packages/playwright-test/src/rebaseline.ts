@@ -15,12 +15,8 @@
  */
 
 import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
-import { types, parse, traverse, codeFrameColumns } from './common/babelBundle';
+import { types, parse, traverse } from './common/babelBundle';
 import type { TestStep } from '../types/testReporter';
-import readline from 'readline';
-import { FullConfigInternal } from './common/types';
 import { TestInfoImpl } from './common/testInfo';
 
 export function isSupportedMatcher(matcherName: string) {
@@ -32,18 +28,17 @@ export function updateSnapshotsMode(testInfo: TestInfoImpl): 'all' | 'none' | 'm
   return updateSnapshots === 'missing' && testInfo.retry < testInfo.project.retries ? 'none' : updateSnapshots;
 }
 
+export function updateMatchersMode(testInfo: TestInfoImpl): 'all' | 'none' | 'missing' {
+  const rebaselineMatchers = testInfo.config.rebaselineMatchers;
+  return rebaselineMatchers === 'missing' && testInfo.retry < testInfo.project.retries ? 'none' : rebaselineMatchers;
+}
+
 type RebaselineRequest = {
   matcherName: string;
   lineNumber: number;
   columnNumber: number;
   file: string;
   value: any;
-};
-
-type SourceCodeMatcher = {
-  name: string;
-  range: { from: number, to: number },
-  argRange?: { from: number, to: number },
 };
 
 export class Rebaseline {
@@ -76,6 +71,7 @@ export class Rebaseline {
   async performRebaselines() {
     if (!this._requests.size)
       return;
+    const unsatisfiedRequests = [];
     const allSourceCodes: Set<SourceCode> = new Set();
     for (const [file, requestIdToRequests] of this._requests) {
       const sourceCode = await SourceCode.read(file);
@@ -85,12 +81,15 @@ export class Rebaseline {
       // Sort requests in reverse order to apply edits.
       const requests = [...requestIdToRequests.values()];
       requests.sort((r1, r2) => r1.lineNumber !== r2.lineNumber ? r2.lineNumber - r1.lineNumber : r2.columnNumber - r1.columnNumber);
+
       for (const request of requests) {
         const offset = sourceCode.positionToOffset(request.lineNumber, request.columnNumber);
         const index = binarySearch(allMatchers, matcher => matcher.range.from - offset);
         const matcher = index !== -1 ? allMatchers[index] : undefined;
-        if (!matcher || matcher.name !== request.matcherName)
-          continue; // Failed to rebaseline.
+        if (!matcher || matcher.name !== request.matcherName) {
+          unsatisfiedRequests.push(request);
+          continue;
+        }
 
         const newValue = JSON.stringify(request.value);
         if (matcher.argRange)
@@ -100,6 +99,13 @@ export class Rebaseline {
       }
     }
     await Promise.all([...allSourceCodes].map((sc: SourceCode) => sc.save()));
+    if (unsatisfiedRequests.length) {
+      const message = [
+        'Failed to perform the following rebaselines:',
+        ...unsatisfiedRequests.map(request => `- ${request.file}:${request.lineNumber + 1}`),
+      ].join('\n');
+      throw new Error(message);
+    }
   }
 }
 
@@ -158,6 +164,12 @@ function binarySearch<T>(haystack: T[], check: (t: T) => number): number {
   return -1;
 }
 
+type SourceCodeMatcher = {
+  name: string;
+  range: { from: number, to: number };
+  argRange?: { from: number, to: number };
+};
+
 function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatcher[] {
   const matchers: SourceCodeMatcher[] = [];
   const ast = parse(code, {
@@ -176,13 +188,22 @@ function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatche
       if (node.arguments.length && !(types.isLiteral(node.arguments[0]) || types.isUnaryExpression(node.arguments[0])))
         return;
       const argument = node.arguments.length ? node.arguments[0] : undefined;
-      matchers.push({
-        name: node.callee.property.name,
-        range: { from: node.callee.property.start!, to: node.end! },
-        argRange: argument ? { from: argument.start!, to: argument.end! } : undefined,
-      });
+      let hasIdentifier = false;
+      if (argument) {
+        path.get('arguments.0').traverse({
+          Identifier: (path) => { hasIdentifier = true; path.stop(); },
+        });
+      }
+      if (!hasIdentifier) {
+        matchers.push({
+          name: node.callee.property.name,
+          range: { from: node.callee.property.start!, to: node.end! },
+          argRange: argument ? { from: argument.start!, to: argument.end! } : undefined,
+        });
+      }
     }
   });
   matchers.sort((m1, m2) => m1.range.from - m2.range.from);
   return matchers;
 }
+

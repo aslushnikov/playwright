@@ -74,6 +74,7 @@ export class ConfigLoader {
     config.shard = takeFirst(configCLIOverrides.shard, config.shard);
     config.timeout = takeFirst(configCLIOverrides.timeout, config.timeout);
     config.updateSnapshots = takeFirst(configCLIOverrides.updateSnapshots, config.updateSnapshots);
+    config.rebaselineMatchers = takeFirst(configCLIOverrides.rebaselineMatchers, config.rebaselineMatchers);
     config.ignoreSnapshots = takeFirst(configCLIOverrides.ignoreSnapshots, config.ignoreSnapshots);
     if (configCLIOverrides.projects && config.projects)
       throw new Error(`Cannot use --browser option when configuration file defines projects. Specify browserName in the projects instead.`);
@@ -121,6 +122,7 @@ export class ConfigLoader {
     this._fullConfig.shard = takeFirst(config.shard, baseFullConfig.shard);
     this._fullConfig._internal.ignoreSnapshots = takeFirst(config.ignoreSnapshots, baseFullConfig._internal.ignoreSnapshots);
     this._fullConfig.updateSnapshots = takeFirst(config.updateSnapshots, baseFullConfig.updateSnapshots);
+    this._fullConfig.rebaselineMatchers = takeFirst(config.rebaselineMatchers, baseFullConfig.rebaselineMatchers);
     this._fullConfig._internal.plugins = ((config as any)._plugins || []).map((p: any) => ({ factory: p }));
 
     const workers = takeFirst(config.workers, '50%');
@@ -357,6 +359,11 @@ function validateConfig(file: string, config: Config) {
       throw errorWithFile(file, `config.updateSnapshots must be one of "all", "none" or "missing"`);
   }
 
+  if ('rebaselineMatchers' in config && config.rebaselineMatchers !== undefined) {
+    if (typeof config.rebaselineMatchers !== 'string' || !['all', 'none', 'missing'].includes(config.rebaselineMatchers))
+      throw errorWithFile(file, `config.rebaselineMatchers must be one of "all", "none" or "missing"`);
+  }
+
   if ('workers' in config && config.workers !== undefined) {
     if (typeof config.workers === 'number' && config.workers <= 0)
       throw errorWithFile(file, `config.workers must be a positive number`);
@@ -438,6 +445,7 @@ export const baseFullConfig: FullConfigInternal = {
   quiet: false,
   shard: null,
   updateSnapshots: 'missing',
+  rebaselineMatchers: 'missing',
   version: require('../../package.json').version,
   workers: 0,
   webServer: null,

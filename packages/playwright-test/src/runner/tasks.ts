@@ -59,7 +59,6 @@ export function createTaskRunner(config: FullConfigInternal, reporter: Multiplex
     taskRunner.addTask('plugin setup', createPluginSetupTask(plugin, doNotTeardown));
   if (config.globalSetup || config.globalTeardown)
     taskRunner.addTask('global setup', createGlobalSetupTask(doNotTeardown));
-  taskRunner.addTask('initialize rebaseline', createRebaselineTask());
   taskRunner.addTask('load tests', createLoadTask('in-process'));
   taskRunner.addTask('clear output', createRemoveOutputDirsTask());
   addCommonTasks(taskRunner, config);
@@ -83,6 +82,9 @@ function addCommonTasks(taskRunner: TaskRunner<TaskRunnerState>, config: FullCon
     taskRunner.addTask('plugin begin', createPluginBeginTask(plugin));
   taskRunner.addTask('start workers', createWorkersTask());
   taskRunner.addTask('test suite', createRunTestsTask());
+  taskRunner.addTask('perform rebaseline', async ({ rebaseline }) => {
+    await rebaseline.performRebaselines();
+  });
   return taskRunner;
 }
 
@@ -95,13 +97,6 @@ export function createTaskRunnerForList(config: FullConfigInternal, reporter: Mu
   });
   return taskRunner;
 }
-
-function createRebaselineTask(): Task<TaskRunnerState> {
-  return async ({ rebaseline }) => {
-    return () => rebaseline.performRebaselines();
-  };
-}
-
 
 function createPluginSetupTask(plugin: TestRunnerPluginRegistration, doNotTeardown: boolean): Task<TaskRunnerState> {
   return async ({ config, reporter }) => {
