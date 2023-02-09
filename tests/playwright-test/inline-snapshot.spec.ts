@@ -35,7 +35,6 @@ test('should update toBe matcher', async ({ runInlineTest }, testInfo) => {
       });
     `
   }, { 'rebaseline-matchers': true });
-  console.log();
   expect(result.exitCode).toBe(0);
   const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
   expect(source).toContain('expect(1).toBe(1)');
@@ -43,6 +42,20 @@ test('should update toBe matcher', async ({ runInlineTest }, testInfo) => {
   expect(source).toContain(`expect('foo-2').toBe("foo-2")`);
   expect(source).toContain(`expect('foo-3').toBe("foo-3")`);
   expect(source).toContain(`expect('foo-4').toBe("foo-4")`);
+});
+
+test('should work with expect.poll', async ({ runInlineTest }, testInfo) => {
+  const result = await runInlineTest({
+    'a.spec.js': `
+      pwt.test('is a test', async ({ }) => {
+        let i = 0;
+        await expect.poll(() => ++i, { timeout: 1000 }).toBe(0);
+      });
+    `
+  }, { 'rebaseline-matchers': true });
+  expect(result.exitCode).toBe(0);
+  const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
+  expect(source).toContain('toBe(4)');
 });
 
 test('should fill matchers when expectation is missing', async ({ runInlineTest }, testInfo) => {

@@ -166,7 +166,15 @@ class ExpectMetaInfoProxyHandler {
   private _actual: any;
 
   constructor(actual: any, messageOrOptions: ExpectMessageOrOptions, isSoft: boolean, isPoll: boolean, generator?: Generator) {
-    this._info = { isSoft, isPoll, generator, isNot: false };
+    this._info = {
+      isSoft, isPoll,
+      isNot: false,
+      generator: generator ? async () => {
+        // We should update actual value every time generator is called.
+        this._actual = await generator();
+        return this._actual;
+      } : undefined,
+    };
     this._actual = actual;
     if (typeof messageOrOptions === 'string') {
       this._info.message = messageOrOptions;
@@ -189,6 +197,7 @@ class ExpectMetaInfoProxyHandler {
     if (this._info.isPoll) {
       if ((customMatchers as any)[matcherName] || matcherName === 'resolves' || matcherName === 'rejects')
         throw new Error(`\`expect.poll()\` does not support "${matcherName}" matcher.`);
+
       matcher = (...args: any[]) => pollMatcher(matcherName, this._info.isNot, this._info.pollIntervals, currentExpectTimeout({ timeout: this._info.pollTimeout }), this._info.generator!, ...args);
     }
     return (...args: any[]) => {
