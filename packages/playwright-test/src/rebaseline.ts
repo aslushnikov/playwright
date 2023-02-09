@@ -65,9 +65,8 @@ export class Rebaseline {
 
       for (const request of requests) {
         const offset = sourceCode.positionToOffset(request.lineNumber - 1, request.columnNumber - 1);
-        const index = binarySearch(allMatchers, matcher => matcher.range.from - offset);
-        const matcher = index !== -1 ? allMatchers[index] : undefined;
-        if (!matcher || matcher.name !== request.matcherName) {
+        const matcher = allMatchers[binarySearch(allMatchers, matcher => matcher.range.from - offset)];
+        if (!matcher || matcher.name !== request.matcherName || matcher.range.from !== offset) {
           unsatisfiedRequests.push(request);
           continue;
         }
@@ -111,6 +110,20 @@ class SourceCode {
     }
   }
 
+  offsetToPosition(offset: number): { lineNumber: number, columnNumber: number } {
+    const lineNumber = binarySearch(this._lineEndings, x => x - offset);
+    return {
+      lineNumber,
+      columnNumber: lineNumber > 0 ? offset - this._lineEndings[lineNumber - 1] - 1 : offset,
+    };
+  }
+
+  line(lineNumber: number) {
+    const from = lineNumber > 0 ? this._lineEndings[lineNumber - 1] + 1 : 0;
+    const to = this._lineEndings[lineNumber];
+    return this.code.substring(from, to);
+  }
+
   positionToOffset(lineNumber: number, columnNumber: number): number {
     return lineNumber === 0 ? columnNumber : this._lineEndings[lineNumber - 1] + 1 + columnNumber;
   }
@@ -129,6 +142,10 @@ class SourceCode {
   }
 }
 
+// [1, 2, 4, 7, 19]
+// binarySearch([1, 2, 4, 7, 19], x => x - 9) => 5
+// console.log(binarySearch([10, 19], x => x - 12) );
+// Return either exact match or the next closest.
 function binarySearch<T>(haystack: T[], check: (t: T) => number): number {
   let l = 0, r = haystack.length;
   while (l < r) {
@@ -142,7 +159,7 @@ function binarySearch<T>(haystack: T[], check: (t: T) => number): number {
     else
       return m;
   }
-  return -1;
+  return l;
 }
 
 type SourceCodeMatcher = {
@@ -161,7 +178,13 @@ function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatche
     ]
   });
 
+  const meaningfulLines = new Set<number>();
   traverse(ast, {
+    enter: path => {
+      const nodeType = path.node.type;
+      if (nodeType.endsWith('Statement') || nodeType.endsWith('Declaration') || nodeType.endsWith('Expression')) {
+      }
+    },
     CallExpression: path => {
       const { node } = path;
       if (!types.isMemberExpression(node.callee) || !types.isIdentifier(node.callee.property) || !isSupportedMatcher(node.callee.property.name))
@@ -170,6 +193,7 @@ function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatche
       let hasIdentifier = false;
       if (argument) {
         const argPath = path.get('arguments.0') as NodePath;
+        // We have to check root explicitly since babel's |path.traverse| does not visit root.
         if (types.isIdentifier(argument)) {
           hasIdentifier = true;
         } else {
@@ -202,3 +226,13 @@ function extractSourceCodeMatchers(file: string, code: string): SourceCodeMatche
   return matchers;
 }
 
+
+/*
+const sc = new SourceCode('foo.txt', `
+foo
+bar`);
+for (let i = 0; i < sc.code.length; ++i)
+  console.log(i, sc.code[i], sc.offsetToPosition(i));
+console.log('line 0', sc.line(0));
+console.log('line 1', sc.line(1));
+*/

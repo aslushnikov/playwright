@@ -28,34 +28,52 @@ test('should update toBe matcher', async ({ runInlineTest }, testInfo) => {
     'a.spec.js': `
       pwt.test('is a test', async ({ }) => {
         expect(1).toBe(2);
-        expect('foo-1').toBe("qqq");
-        expect('foo-2').toBe({ foo: 'baz' });
+        expect('foo-1').toBe("qqq" /* trailing comment */);
+        expect('foo-2').toBe(/* leading comment */{ foo: 'baz' });
         expect('foo-3').toBe({ 'foo': 'bar' });
         expect('foo-4').toBe({ ['foo']: 'bar' });
+        expect.soft('foo-5').toBe([1
+    ,2
+              ,3]);
       });
     `
   }, { 'rebaseline-matchers': true });
   expect(result.exitCode).toBe(0);
   const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
   expect(source).toContain('expect(1).toBe(1)');
-  expect(source).toContain(`expect('foo-1').toBe("foo-1")`);
-  expect(source).toContain(`expect('foo-2').toBe("foo-2")`);
+  expect(source).toContain(`expect('foo-1').toBe("foo-1" /* trailing comment */)`);
+  expect(source).toContain(`expect('foo-2').toBe(/* leading comment */"foo-2")`);
   expect(source).toContain(`expect('foo-3').toBe("foo-3")`);
   expect(source).toContain(`expect('foo-4').toBe("foo-4")`);
+  expect(source).toContain(`expect.soft('foo-5').toBe("foo-5")`);
 });
 
 test('should work with expect.poll', async ({ runInlineTest }, testInfo) => {
   const result = await runInlineTest({
     'a.spec.js': `
       pwt.test('is a test', async ({ }) => {
-        let i = 0;
-        await expect.poll(() => ++i, { timeout: 1000 }).toBe(0);
+        await expect.poll(() => 4, { timeout: 1000 }).toBe(0);
       });
     `
   }, { 'rebaseline-matchers': true });
   expect(result.exitCode).toBe(0);
   const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
   expect(source).toContain('toBe(4)');
+});
+
+test('should work with expect().toPass', async ({ runInlineTest }, testInfo) => {
+  const result = await runInlineTest({
+    'a.spec.js': `
+      pwt.test('is a test', async ({ }) => {
+        await expect(() => {
+          expect('foo').toBe('bar');
+        }).toPass({ timeout: 1000 });
+      });
+    `
+  }, { 'rebaseline-matchers': true });
+  expect(result.exitCode).toBe(0);
+  const source = fs.readFileSync(testInfo.outputPath('a.spec.js'), 'utf-8');
+  expect(source).toContain('toBe("foo")');
 });
 
 test('should fill matchers when expectation is missing', async ({ runInlineTest }, testInfo) => {
