@@ -17,6 +17,7 @@
 import { test, expect } from '../playwright-test/stable-test-runner';
 import { PNG } from 'playwright-core/lib/utilsBundle';
 import { compare } from 'playwright-core/lib/image_tools/compare';
+import looksSame from 'looks-same';
 import fs from 'fs';
 import path from 'path';
 
@@ -57,15 +58,33 @@ function declareFixtureTest(fixtureRoot: string, fixtureName: string, shouldMatc
       maxColorDeltaE94: 1.0,
     });
 
+    const looksSameOptions = {
+      strict: false, // strict comparsion
+      tolerance: 2.5,
+      antialiasingTolerance: 3,
+      ignoreAntialiasing: true, // ignore antialising by default
+      ignoreCaret: true // ignore caret by default
+    };
+    const { equal } = await looksSame(actual, expected, looksSameOptions);
+    const diff = await looksSame.createDiff({
+      reference: expected,
+      current: actual,
+      extension: 'png',
+      highlightColor: '#ff0000', // color to highlight the differences
+      ...looksSameOptions,
+    });
+
+    diffPNG.data = diff;
+
     await testInfo.attach(fixtureName + '-diff.png', {
       body: PNG.sync.write(diffPNG),
       contentType: 'image/png',
     });
 
     if (shouldMatch)
-      expect(diffCount).toBe(0);
+      expect(equal).toBe(true);
     else
-      expect(diffCount).not.toBe(0);
+      expect(equal).toBe(false);
   });
 }
 
