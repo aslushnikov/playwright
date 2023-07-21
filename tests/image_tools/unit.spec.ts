@@ -19,7 +19,57 @@ import { ssim, FastStats } from 'playwright-core/lib/image_tools/stats';
 import { ImageChannel } from 'playwright-core/lib/image_tools/imageChannel';
 import { srgb2xyz, xyz2lab, colorDeltaE94 } from 'playwright-core/lib/image_tools/colorUtils';
 import referenceSSIM from 'ssim.js';
-import { randomPNG, assertEqual, grayChannel } from './utils';
+import { createRandom, randomPNG, assertEqual, grayChannel } from './utils';
+import colorDiff from 'color-diff';
+
+test.only('compare CIE94 vs CIEDE2000', async () => {
+  const rnd = createRandom(1989);
+  const rgbsFor1994 = [];
+  const rgbsFor2000 = [];
+  const N = 1000000;
+  for (let i = 0; i < N; ++i) {
+    const R = rnd() * 255 | 0;
+    const G = rnd() * 255 | 0;
+    const B = rnd() * 255 | 0;
+    rgbsFor1994.push([R, G, B]);
+    rgbsFor2000.push({ R, G, B });
+  }
+  // Measure time separately for each color functions.
+  console.log(`Executing color diff functions ${N} times:`);
+  console.time('- CIEDE2000');
+  for (let i = 0; i < N - 1; ++i)
+    colorDiff.diff(rgbsFor2000[i], rgbsFor2000[i + 1]);
+  console.timeEnd('- CIEDE2000');
+  console.time('- CIE94');
+  for (let i = 0; i < N - 1; ++i)
+    colorDeltaE94(rgbsFor1994[i], rgbsFor1994[i + 1]);
+  console.timeEnd('- CIE94');
+
+  const JND = 2.3;
+  let maxDifference = 0, maxIndex = -1, max1994, max2000;
+  for (let i = 0; i < N - 1; ++i) {
+    const cie1994 = colorDeltaE94(rgbsFor1994[i], rgbsFor1994[i + 1]);
+    const cie2000 = colorDiff.diff(rgbsFor2000[i], rgbsFor2000[i + 1]);
+    if (cie1994 < JND && cie2000 < JND)
+      continue;
+    if (cie1994 > JND && cie2000 > JND)
+      continue;
+    const diff = Math.abs(cie1994, cie2000);
+    if (maxDifference >= diff)
+      continue;
+    maxDifference = diff;
+    maxIndex = i;
+    max1994 = cie1994;
+    max2000 = cie2000;
+  }
+  console.log(`
+== Max difference around JND=${JND} value ==
+         c1: rgb(${rgbsFor1994[maxIndex].join(', ')})
+         c2: rgb(${rgbsFor1994[maxIndex + 1].join(', ')})
+    cie1994: ${max1994}
+    cie2000: ${max2000}
+  `);
+});
 
 test('srgb to lab conversion should work', async () => {
   const srgb = [123, 81, 252];
