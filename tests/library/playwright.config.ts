@@ -21,6 +21,13 @@ import { type Config, type PlaywrightTestOptions, type PlaywrightWorkerOptions, 
 import * as path from 'path';
 import type { TestModeWorkerOptions } from '../config/testModeFixtures';
 import type { TestModeName } from '../config/testMode';
+import { CurrentsConfig, currentsReporter } from "@currents/playwright";
+
+const currentsConfig: CurrentsConfig = {
+  ciBuildId: process.env.CURRENTS_CI_BUILD_ID, // 📖 https://currents.dev/readme/guides/ci-build-id
+  recordKey: process.env.CURRENTS_RECORD_KEY, // 📖 https://currents.dev/readme/guides/record-key
+  projectId: "0aqaxy", // get one at https://app.currents.dev
+};
 
 type BrowserName = 'chromium' | 'firefox' | 'webkit';
 
@@ -43,6 +50,7 @@ const outputDir = path.join(__dirname, '..', '..', 'test-results');
 const testDir = path.join(__dirname, '..');
 const reporters = () => {
   const result: ReporterDescription[] = process.env.CI ? [
+    currentsReporter(currentsConfig),
     ['dot'],
     ['json', { outputFile: path.join(outputDir, 'report.json') }],
     ['blob', { fileName: `${process.env.PWTEST_BOT_NAME}.zip` }],
