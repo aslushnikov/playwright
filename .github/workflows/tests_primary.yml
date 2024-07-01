@@ -45,6 +45,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: |
         echo "::group::npm run build"
+        npm ci
         npm run build
         echo "::endgroup::"
       shell: bash
