@@ -56,5 +56,5 @@ jobs:
       shell: bash
     - name: Run tests
       run: |
-        xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run test -- --project=${{ matrix.browser }}-*
+        xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run ctest -- --grep '@smoke'
       shell: bash

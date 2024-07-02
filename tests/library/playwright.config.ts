@@ -50,10 +50,8 @@ const outputDir = path.join(__dirname, '..', '..', 'test-results');
 const testDir = path.join(__dirname, '..');
 const reporters = () => {
   const result: ReporterDescription[] = process.env.CI ? [
-    currentsReporter(currentsConfig),
     ['dot'],
-    ['json', { outputFile: path.join(outputDir, 'report.json') }],
-    ['blob', { fileName: `${process.env.PWTEST_BOT_NAME}.zip` }],
+    currentsReporter(currentsConfig),
   ] : [
     ['html', { open: 'on-failure' }]
   ];
